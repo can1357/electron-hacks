@@ -99,18 +99,14 @@ jobs:
       - name: Build ${{ matrix.app }} (rpm)
         run: npm run build:${{ matrix.app }}:rpm
 
-      - name: Collect artifacts
-        run: |
-          shopt -s nullglob
-          mkdir -p release
-          cp dist/${{ matrix.app }}/*.AppImage dist/${{ matrix.app }}/*.deb rpmbuild/RPMS/*/*.rpm release/ 2>/dev/null || true
-          ls -la release/
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: packages-${{ matrix.app }}
-          path: release/*
+          path: |
+            dist/${{ matrix.app }}/*.AppImage
+            dist/${{ matrix.app }}/*.deb
+            dist/${{ matrix.app }}/*.rpm
 
   release:
     needs: build

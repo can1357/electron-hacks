@@ -51,3 +51,16 @@ fs.symlinkSync(unpackedSrc, unpackedDst);
 fs.symlinkSync(iconSrc, iconDst);
 
 execSync(`rpmbuild --define "_topdir ${topdir}" -bb ${specDst}`, { stdio: 'inherit' });
+
+// Copy built RPM to dist/{app}/
+const distDir = path.join(__dirname, 'dist', app);
+for (const arch of fs.readdirSync(rpmsDir)) {
+   const archDir = path.join(rpmsDir, arch);
+   if (!fs.statSync(archDir).isDirectory()) continue;
+   for (const rpm of fs.readdirSync(archDir)) {
+      if (rpm.startsWith(`${app}-`) && rpm.endsWith('.rpm')) {
+         fs.copyFileSync(path.join(archDir, rpm), path.join(distDir, rpm));
+         console.log(`Copied: ${rpm} -> dist/${app}/`);
+      }
+   }
+}
