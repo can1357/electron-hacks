@@ -21,7 +21,7 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/512x512/apps
 
 cp -r %{_sourcedir}/claude-desktop/linux-unpacked/* %{buildroot}/opt/claude-desktop/
 rm -f %{buildroot}/opt/claude-desktop/resources/app.asar
-cp %{_sourcedir}/claude/icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/claude.png
+cp %{_sourcedir}/claude-desktop/icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/claude.png
 
 cat > %{buildroot}/usr/bin/claude-desktop << 'EOF'
 #!/bin/bash

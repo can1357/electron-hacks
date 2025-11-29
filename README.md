@@ -63,7 +63,7 @@ The update script:
 1. Extracts `app.asar` from the official installer
 2. Patches `@ant/claude-native` with Linux stubs
 3. Removes Windows/macOS native binaries
-4. Copies resources to `claude/resources/`
+4. Copies resources to `claude-desktop/resources/`
 
 Native module stubs provide no-op implementations for:
 - Window effects (taskbar progress, flash, overlay icons)

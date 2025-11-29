@@ -3,5 +3,5 @@ dist/
 rpmbuild/
 *.log
 *.rpm
-claude/resources/
+claude-desktop/resources/
 .tmp-claude-extract/

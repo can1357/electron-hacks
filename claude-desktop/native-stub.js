@@ -1,4 +1,8 @@
-const { BrowserWindow } = require('electron');
+let BrowserWindow = null;
+const getBrowserWindow = () => {
+   if (!BrowserWindow) BrowserWindow = require('electron').BrowserWindow;
+   return BrowserWindow;
+};
 
 const KeyboardKey = {
    Backspace: 43, Tab: 280, Enter: 261, Shift: 272, Control: 61,
@@ -32,27 +36,23 @@ module.exports = {
    readCfPrefValue: () => null,
    getAppInfoForFile: () => null,
    getActiveWindowHandle: () => {
-      const win = BrowserWindow.getFocusedWindow() || BrowserWindow.getAllWindows()[0];
+      const BW = getBrowserWindow();
+      const win = BW.getFocusedWindow() || BW.getAllWindows()[0];
       return { handle: win ? win.id : 0 };
    },
    focusWindow: (handle) => {
+      const BW = getBrowserWindow();
       let id = typeof handle === 'object' ? handle?.handle : handle;
-      if (typeof id !== 'number' || id <= 0) {
-         const win = BrowserWindow.getAllWindows().find(w => !w.isDestroyed());
-         if (win) { win.show(); win.focus(); }
-         return;
-      }
+      // If no valid handle, don't force-raise any window (e.g., Claude was in tray)
+      if (typeof id !== 'number' || id <= 0) return;
       try {
-         const win = BrowserWindow.fromId(id);
+         const win = BW.fromId(id);
          if (win && !win.isDestroyed()) {
             win.show();
-            if (win.isMinimized()) win.restore();
+            win.restore();
             win.focus();
          }
-      } catch {
-         const win = BrowserWindow.getAllWindows().find(w => !w.isDestroyed());
-         if (win) { win.show(); win.focus(); }
-      }
+      } catch {}
    },
    KeyboardKey,
    AuthRequest

@@ -23,7 +23,7 @@ if (!fs.existsSync(installerPath)) {
 }
 
 const rootDir = path.join(__dirname, '..');
-const claudeDir = path.join(rootDir, 'claude');
+const claudeDir = path.join(rootDir, 'claude-desktop');
 const resourcesDir = path.join(claudeDir, 'resources');
 const appDir = path.join(resourcesDir, 'app');
 const tmpDir = path.join(rootDir, '.tmp-claude-extract');
@@ -86,33 +86,41 @@ function extractAsar(resourcesSrc) {
    asar.extractAll(asarSrc, appDir);
    console.log(`  Extracted to: ${appDir}`);
 
-   // Copy i18n files
+   // Copy i18n files to both locations:
+   // 1. resourcesDir (for process.resourcesPath lookup)
+   // 2. appDir/resources/i18n (for bundled app lookup)
    const i18nDir = path.join(appDir, 'resources', 'i18n');
    fs.mkdirSync(i18nDir, { recursive: true });
 
    const jsonFiles = fs.readdirSync(resourcesSrc).filter(f => f.endsWith('.json'));
    for (const file of jsonFiles) {
+      fs.copyFileSync(path.join(resourcesSrc, file), path.join(resourcesDir, file));
       fs.copyFileSync(path.join(resourcesSrc, file), path.join(i18nDir, file));
-      console.log(`  Added: resources/i18n/${file}`);
+      console.log(`  Added: ${file}`);
    }
 
-   // Copy and fix tray icons
+   // Copy and fix tray icons to both locations
    const appResourcesDir = path.join(appDir, 'resources');
    const trayIcons = fs.readdirSync(resourcesSrc).filter(f => f.startsWith('TrayIcon') && f.endsWith('.png'));
    for (const icon of trayIcons) {
       const src = path.join(resourcesSrc, icon);
-      const dst = path.join(appResourcesDir, icon);
-      fs.copyFileSync(src, dst);
+      const dstApp = path.join(appResourcesDir, icon);
+      const dstRes = path.join(resourcesDir, icon);
+
+      fs.copyFileSync(src, dstApp);
+      fs.copyFileSync(src, dstRes);
 
       const bg = icon.includes('-Dark') ? 'white' : 'black';
-      try {
-         execSync(`magick "${dst}" -background ${bg} -alpha shape -define png:color-type=6 "${dst}"`, { stdio: 'pipe' });
-      } catch {
+      for (const dst of [dstApp, dstRes]) {
          try {
-            execSync(`convert "${dst}" -background ${bg} -alpha shape -define png:color-type=6 "${dst}"`, { stdio: 'pipe' });
-         } catch {}
+            execSync(`magick "${dst}" -background ${bg} -alpha shape -define png:color-type=6 "${dst}"`, { stdio: 'pipe' });
+         } catch {
+            try {
+               execSync(`convert "${dst}" -background ${bg} -alpha shape -define png:color-type=6 "${dst}"`, { stdio: 'pipe' });
+            } catch {}
+         }
       }
-      console.log(`  Added: resources/${icon}`);
+      console.log(`  Added: ${icon}`);
    }
 
    return appDir;
@@ -262,66 +270,10 @@ function installPreload() {
       console.log('  Copied: icon.png');
    }
 
-   // Create preload.js wrapper
-   const preloadContent = `// Linux fixes for Claude Desktop
-const { app, nativeImage, globalShortcut, BrowserWindow } = require('electron');
-const path = require('path');
-const fs = require('fs');
-
-// Register F12 for DevTools (detached)
-app.whenReady().then(() => {
-   globalShortcut.register('F12', () => {
-      BrowserWindow.getFocusedWindow()?.webContents.openDevTools({ mode: 'detach' });
-   });
-});
-
-// Theme CSS
-const themePath = path.join(__dirname, 'breeze.css');
-let themeCSS = '';
-if (fs.existsSync(themePath)) {
-   themeCSS = fs.readFileSync(themePath, 'utf8');
-   console.log('[Linux] Loaded theme CSS:', themeCSS.length, 'bytes');
-}
-
-// Icon
-const iconPath = path.join(__dirname, 'icon.png');
-
-// CSS to hide custom titlebar in shell windows
-const hideTitlebarCSS = \`.nc-drag { display: none !important; height: 0 !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important; }\`;
-
-// Inject CSS into webContents
-app.on('web-contents-created', (event, webContents) => {
-   webContents.on('did-finish-load', () => {
-      const url = webContents.getURL();
-      // Hide custom titlebar in shell windows (file:// URLs)
-      if (url.startsWith('file://')) {
-         webContents.insertCSS(hideTitlebarCSS)
-            .then(() => console.log('[Linux] Titlebar CSS injected'))
-            .catch(() => {});
-      }
-      // Inject theme CSS into claude.ai
-      if (themeCSS && url.includes('claude.ai')) {
-         webContents.insertCSS(themeCSS)
-            .then(() => console.log('[Linux] Theme injected'))
-            .catch(() => {});
-      }
-   });
-});
-
-// Set icon on windows
-app.on('browser-window-created', (event, window) => {
-   if (process.platform === 'linux' && fs.existsSync(iconPath)) {
-      const icon = nativeImage.createFromPath(iconPath);
-      if (!icon.isEmpty()) window.setIcon(icon);
-   }
-});
-
-// Load original entry point
-require('./.vite/build/index.pre.js');
-`;
-
-   fs.writeFileSync(path.join(appDir, 'preload.js'), preloadContent);
-   console.log('  Created: preload.js');
+   // Copy preload.js wrapper
+   const preloadSrc = path.join(claudeDir, 'preload.js');
+   fs.copyFileSync(preloadSrc, path.join(appDir, 'preload.js'));
+   console.log('  Copied: preload.js');
 
    // Update package.json entry point
    const pkgPath = path.join(appDir, 'package.json');

@@ -5,22 +5,23 @@
     "output": "dist/claude-desktop"
   },
   "files": [
-    "claude/main-desktop.js",
-    "claude/frame-fix.js",
-    "claude/breeze.css",
-    "claude/native-stub.js",
-    "claude/icon.png",
-    "claude/resources/**/*"
+    "claude-desktop/main-desktop.js",
+    "claude-desktop/frame-fix.js",
+    "claude-desktop/breeze.css",
+    "claude-desktop/native-stub.js",
+    "claude-desktop/preload.js",
+    "claude-desktop/icon.png",
+    "claude-desktop/resources/**/*"
   ],
   "asar": false,
   "extraMetadata": {
     "name": "claude-desktop",
-    "main": "claude/main-desktop.js"
+    "main": "claude-desktop/main-desktop.js"
   },
   "linux": {
     "target": ["AppImage"],
     "category": "Office",
-    "icon": "claude/icon.png",
+    "icon": "claude-desktop/icon.png",
     "executableName": "claude-desktop"
   }
 }
