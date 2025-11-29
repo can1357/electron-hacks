@@ -35,7 +35,7 @@ jobs:
         id: claude-cache
         uses: actions/cache@v4
         with:
-          path: src/claude-desktop
+          path: claude-desktop/resources
           key: ${{ steps.claude-key.outputs.key }}
 
       - name: Install system dependencies
@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: claude-source
-          path: src/claude-desktop
+          path: claude-desktop/resources
           retention-days: 1
 
   build:
@@ -91,10 +91,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: claude-source
-          path: src/claude-desktop
+          path: claude-desktop/resources
 
       - name: Build ${{ matrix.app }} (AppImage + deb)
-        run: npm run build:${{ matrix.app }} -- --publish never
+        run: npm run build:${{ matrix.app }}
 
       - name: Build ${{ matrix.app }} (rpm)
         run: npm run build:${{ matrix.app }}:rpm

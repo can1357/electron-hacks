@@ -1,4 +1,5 @@
 {
+  "publish": null,
   "appId": "com.anthropic.claude-desktop",
   "productName": "Claude Desktop",
   "directories": {
