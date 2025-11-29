@@ -1,5 +1,5 @@
 Name:           miro
-Version:        1.0.0
+Version:        1.4.0
 Release:        1%{?dist}
 Summary:        Miro desktop app for Linux
 License:        MIT
@@ -33,7 +33,7 @@ cat > %{buildroot}/usr/share/applications/miro.desktop << 'EOF'
 [Desktop Entry]
 Name=Miro
 Comment=Online collaborative whiteboard
-Exec=/opt/miro/miro %U
+Exec=miro %U
 Icon=miro
 Type=Application
 Categories=Office;ProjectManagement;

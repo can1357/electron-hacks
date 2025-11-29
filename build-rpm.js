@@ -8,9 +8,6 @@ if (!app) {
    process.exit(1);
 }
 
-const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
-const version = pkg.version;
-
 const topdir = path.join(__dirname, 'rpmbuild');
 const specsDir = path.join(topdir, 'SPECS');
 const sourcesDir = path.join(topdir, 'SOURCES', app);
@@ -36,13 +33,16 @@ if (fs.existsSync(rpmsDir)) {
    }
 }
 
-// Copy spec with version from package.json
-let specContent = fs.readFileSync(specSrc, 'utf8');
-specContent = specContent.replace(/^Version:\s+.*/m, `Version:        ${version}`);
-fs.writeFileSync(specDst, specContent);
+fs.copyFileSync(specSrc, specDst);
 
 const unpackedSrc = path.resolve(__dirname, `dist/${app}/linux-unpacked`);
 const unpackedDst = path.join(sourcesDir, 'linux-unpacked');
+
+if (!fs.existsSync(unpackedSrc)) {
+   console.error(`Error: ${unpackedSrc} not found`);
+   console.error(`Run: npm run build:${app}:appimage  (or build:${app} for all formats)`);
+   process.exit(1);
+}
 
 const iconSrc = path.resolve(__dirname, `${app}/icon.png`);
 const iconDst = path.join(sourcesDir, 'icon.png');

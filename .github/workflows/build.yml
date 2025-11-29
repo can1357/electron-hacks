@@ -6,10 +6,15 @@ on:
       - 'v*'
   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+env:
+  CLAUDE_VERSION: "1.0.1307"
+  CLAUDE_BUILD_ID: "1ed8835ce5539ba2a894ab752752be672a17c0d8"
 
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      claude-cache-key: ${{ steps.claude-key.outputs.key }}
     steps:
       - uses: actions/checkout@v4
 
@@ -22,53 +27,107 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate Claude cache key
+        id: claude-key
+        run: echo "key=claude-desktop-${{ env.CLAUDE_VERSION }}-${{ env.CLAUDE_BUILD_ID }}" >> $GITHUB_OUTPUT
+
+      - name: Cache Claude Desktop source
+        id: claude-cache
+        uses: actions/cache@v4
+        with:
+          path: src/claude-desktop
+          key: ${{ steps.claude-key.outputs.key }}
+
       - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y rpm p7zip-full imagemagick
+        if: steps.claude-cache.outputs.cache-hit != 'true'
+        run: sudo apt-get update && sudo apt-get install -y p7zip-full
 
       - name: Download and extract Claude Desktop
+        if: steps.claude-cache.outputs.cache-hit != 'true'
         run: |
-          curl -L -o claude-installer.exe "https://downloads.claude.ai/releases/win32/x64/1.0.1307/Claude-1ed8835ce5539ba2a894ab752752be672a17c0d8.exe"
+          curl -L -o claude-installer.exe "https://downloads.claude.ai/releases/win32/x64/${{ env.CLAUDE_VERSION }}/Claude-${{ env.CLAUDE_BUILD_ID }}.exe"
           npm run update-claude -- claude-installer.exe
           rm claude-installer.exe
 
-      - name: Build Miro (AppImage + deb)
-        run: npm run build:miro -- --publish never
+      - name: Upload Claude source
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-source
+          path: src/claude-desktop
+          retention-days: 1
 
-      - name: Build Miro (rpm)
-        run: npm run build:miro:rpm
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [miro, notion, claude-desktop]
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Build Notion (AppImage + deb)
-        run: npm run build:notion -- --publish never
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Build Notion (rpm)
-        run: npm run build:notion:rpm
+      - name: Cache electron-builder
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/electron-builder
+          key: electron-builder-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            electron-builder-${{ runner.os }}-
 
-      - name: Build Claude Desktop (AppImage + deb)
-        run: npm run build:claude-desktop -- --publish never
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build Claude Desktop (rpm)
-        run: npm run build:claude-desktop:rpm
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y rpm p7zip-full imagemagick
+
+      - name: Download Claude source
+        if: matrix.app == 'claude-desktop'
+        uses: actions/download-artifact@v4
+        with:
+          name: claude-source
+          path: src/claude-desktop
+
+      - name: Build ${{ matrix.app }} (AppImage + deb)
+        run: npm run build:${{ matrix.app }} -- --publish never
+
+      - name: Build ${{ matrix.app }} (rpm)
+        run: npm run build:${{ matrix.app }}:rpm
 
       - name: Collect artifacts
         run: |
+          shopt -s nullglob
           mkdir -p release
-          cp dist/miro/*.AppImage release/
-          cp dist/miro/*.deb release/
-          cp dist/notion/*.AppImage release/
-          cp dist/notion/*.deb release/
-          cp dist/claude-desktop/*.AppImage release/
-          cp dist/claude-desktop/*.deb release/
-          cp rpmbuild/RPMS/*/*.rpm release/
+          cp dist/${{ matrix.app }}/*.AppImage dist/${{ matrix.app }}/*.deb rpmbuild/RPMS/*/*.rpm release/ 2>/dev/null || true
           ls -la release/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: packages
+          name: packages-${{ matrix.app }}
           path: release/*
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: packages-*
+          path: release
+          merge-multiple: true
+
+      - name: List release files
+        run: ls -la release/
+
       - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: release/*

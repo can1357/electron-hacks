@@ -1,5 +1,5 @@
 Name:           notion
-Version:        1.0.0
+Version:        1.4.0
 Release:        1%{?dist}
 Summary:        Notion desktop app for Linux
 License:        MIT
@@ -33,7 +33,7 @@ cat > %{buildroot}/usr/share/applications/notion.desktop << 'EOF'
 [Desktop Entry]
 Name=Notion
 Comment=Notion workspace
-Exec=/opt/notion/notion %U
+Exec=notion %U
 Icon=notion
 Type=Application
 Categories=Office;
