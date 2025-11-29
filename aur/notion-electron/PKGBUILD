@@ -1,0 +1,36 @@
+# Maintainer: Can Bölük <me@can.ac>
+pkgname=notion-electron
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="Notion desktop app for Linux (Electron wrapper)"
+arch=('x86_64')
+url="https://github.com/can1357/electron-hacks"
+license=('MIT')
+depends=('electron' 'hicolor-icon-theme')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+    cd "$srcdir/electron-hacks-$pkgver"
+
+    install -Dm644 notion/main.js "$pkgdir/usr/lib/$pkgname/main.js"
+    install -Dm644 notion/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/notion.png"
+
+    install -Dm755 /dev/stdin "$pkgdir/usr/bin/notion" <<EOF
+#!/bin/bash
+exec electron /usr/lib/$pkgname/main.js "\$@"
+EOF
+
+    install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/notion.desktop" <<EOF
+[Desktop Entry]
+Name=Notion
+Comment=Notion workspace
+Exec=notion %U
+Icon=notion
+Type=Application
+Categories=Office;
+StartupWMClass=Notion
+EOF
+
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE" 2>/dev/null || true
+}

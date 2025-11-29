@@ -23,19 +23,31 @@ jobs:
         run: npm ci
 
       - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y rpm
+        run: sudo apt-get update && sudo apt-get install -y rpm p7zip-full imagemagick
+
+      - name: Download and extract Claude Desktop
+        run: |
+          curl -L -o claude-installer.exe "https://downloads.claude.ai/releases/win32/x64/1.0.1307/Claude-1ed8835ce5539ba2a894ab752752be672a17c0d8.exe"
+          npm run update-claude -- claude-installer.exe
+          rm claude-installer.exe
 
       - name: Build Miro (AppImage + deb)
-        run: npm run build:miro
+        run: npm run build:miro -- --publish never
 
       - name: Build Miro (rpm)
         run: npm run build:miro:rpm
 
       - name: Build Notion (AppImage + deb)
-        run: npm run build:notion
+        run: npm run build:notion -- --publish never
 
       - name: Build Notion (rpm)
         run: npm run build:notion:rpm
+
+      - name: Build Claude Desktop (AppImage + deb)
+        run: npm run build:claude-desktop -- --publish never
+
+      - name: Build Claude Desktop (rpm)
+        run: npm run build:claude-desktop:rpm
 
       - name: Collect artifacts
         run: |
@@ -44,6 +56,8 @@ jobs:
           cp dist/miro/*.deb release/
           cp dist/notion/*.AppImage release/
           cp dist/notion/*.deb release/
+          cp dist/claude-desktop/*.AppImage release/
+          cp dist/claude-desktop/*.deb release/
           cp rpmbuild/RPMS/*/*.rpm release/
           ls -la release/
 

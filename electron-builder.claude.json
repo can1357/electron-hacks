@@ -1,0 +1,26 @@
+{
+  "appId": "com.anthropic.claude-desktop",
+  "productName": "Claude Desktop",
+  "directories": {
+    "output": "dist/claude-desktop"
+  },
+  "files": [
+    "claude/main-desktop.js",
+    "claude/frame-fix.js",
+    "claude/breeze.css",
+    "claude/native-stub.js",
+    "claude/icon.png",
+    "claude/resources/**/*"
+  ],
+  "asar": false,
+  "extraMetadata": {
+    "name": "claude-desktop",
+    "main": "claude/main-desktop.js"
+  },
+  "linux": {
+    "target": ["AppImage"],
+    "category": "Office",
+    "icon": "claude/icon.png",
+    "executableName": "claude-desktop"
+  }
+}

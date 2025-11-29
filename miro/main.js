@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, Menu, nativeTheme, nativeImage } = require('electron');
+const { app, BrowserWindow, shell, Menu, nativeTheme, nativeImage, globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -137,6 +137,10 @@ app.whenReady().then(() => {
    loadDarkCss();
    Menu.setApplicationMenu(createMenu());
    createWindow();
+
+   globalShortcut.register('F12', () => {
+      BrowserWindow.getFocusedWindow()?.webContents.toggleDevTools();
+   });
 
    app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) {
