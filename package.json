@@ -1,0 +1,33 @@
+{
+  "name": "electron-hacks",
+  "version": "1.0.0",
+  "description": "Electron wrappers for web apps",
+  "scripts": {
+    "start:miro": "electron miro/main.js",
+    "start:notion": "electron notion/main.js",
+    "build:miro": "electron-builder --config electron-builder.miro.json --linux",
+    "build:miro:deb": "electron-builder --config electron-builder.miro.json --linux deb",
+    "build:miro:rpm": "electron-builder --config electron-builder.miro.json --linux dir && node build-rpm.js miro",
+    "build:miro:appimage": "electron-builder --config electron-builder.miro.json --linux AppImage",
+    "build:notion": "electron-builder --config electron-builder.notion.json --linux",
+    "build:notion:deb": "electron-builder --config electron-builder.notion.json --linux deb",
+    "build:notion:rpm": "electron-builder --config electron-builder.notion.json --linux dir && node build-rpm.js notion",
+    "build:notion:appimage": "electron-builder --config electron-builder.notion.json --linux AppImage"
+  },
+  "keywords": [
+    "electron",
+    "miro",
+    "notion",
+    "wrapper"
+  ],
+  "homepage": "https://github.com/can1357/electron-hacks",
+  "author": {
+    "name": "Can Bölük",
+    "email": "me@can.ac"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^39.2.4",
+    "electron-builder": "^26.0.12"
+  }
+}

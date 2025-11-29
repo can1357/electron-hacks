@@ -1,0 +1,21 @@
+{
+  "appId": "com.miro.desktop",
+  "productName": "Miro",
+  "directories": {
+    "output": "dist/miro"
+  },
+  "files": [
+    "miro/**/*"
+  ],
+  "asar": false,
+  "extraMetadata": {
+    "name": "miro-electron",
+    "main": "miro/main.js"
+  },
+  "linux": {
+    "target": ["AppImage", "deb"],
+    "category": "Office",
+    "icon": "miro/icon.png",
+    "executableName": "miro"
+  }
+}

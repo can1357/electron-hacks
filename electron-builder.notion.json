@@ -1,0 +1,21 @@
+{
+  "appId": "com.notion.desktop",
+  "productName": "Notion",
+  "directories": {
+    "output": "dist/notion"
+  },
+  "files": [
+    "notion/**/*"
+  ],
+  "asar": false,
+  "extraMetadata": {
+    "name": "notion-electron",
+    "main": "notion/main.js"
+  },
+  "linux": {
+    "target": ["AppImage", "deb"],
+    "category": "Office",
+    "icon": "notion/icon.png",
+    "executableName": "notion"
+  }
+}
