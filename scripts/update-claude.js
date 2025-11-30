@@ -274,6 +274,42 @@ function patchCode() {
          console.log(`  Patched: ${file} - hide custom titlebar`);
       }
    }
+
+   // Patch quick window HTML with Breeze theme
+   const quickWindowHtml = path.join(appDir, '.vite/renderer/quick_window/quick-window.html');
+   if (fs.existsSync(quickWindowHtml)) {
+      let html = fs.readFileSync(quickWindowHtml, 'utf8');
+      const breezeCSS = '<style id="breeze-theme">/* Breeze */ .darkTheme { --claude-accent-clay: #3daee9 !important; } * { --claude-accent-clay: #3daee9 !important; } :root:not(.darkTheme) * { --claude-accent-clay: #2980b9 !important; } .darkTheme .container { background: linear-gradient(to bottom, rgba(44, 47, 52, 0.95), rgba(38, 41, 46, 1)) !important; }</style>';
+      html = html.replace('<head>', '<head>\n    ' + breezeCSS);
+      fs.writeFileSync(quickWindowHtml, html);
+      console.log('  Patched: quick-window.html - Breeze theme');
+   }
+
+   // Replace Claude orange accent with Breeze blue in all JS files
+   function findJsFiles(dir) {
+      let results = [];
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+         const fullPath = path.join(dir, entry.name);
+         if (entry.isDirectory()) {
+            results = results.concat(findJsFiles(fullPath));
+         } else if (entry.name.endsWith('.js')) {
+            results.push(fullPath);
+         }
+      }
+      return results;
+   }
+   let replacedCount = 0;
+   for (const jsFile of findJsFiles(appDir)) {
+      let content = fs.readFileSync(jsFile, 'utf8');
+      if (content.includes('#D97757') || content.includes('#d97757')) {
+         content = content.replace(/#D97757/gi, '#0e588a');
+         fs.writeFileSync(jsFile, content);
+         replacedCount++;
+      }
+   }
+   if (replacedCount > 0) {
+      console.log(`  Patched: ${replacedCount} JS files - #D97757 -> #0e588a`);
+   }
 }
 
 function installMain() {

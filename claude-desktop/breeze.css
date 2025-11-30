@@ -1,6 +1,102 @@
 /* KDE Breeze Dark theme for Claude */
 /* Based on KDE titlebar #26292e */
 
+/* Quick window and local windows - Breeze Light (default) */
+:root:not(.darkTheme) {
+  --claude-accent-clay: #2980b9 !important;
+  --accent-brand: 207 90% 42% !important;
+  --accent-main-000: 207 90% 42% !important;
+  --accent-main-100: 207 90% 42% !important;
+  --accent-main-200: 207 90% 42% !important;
+  --accent-main-900: 207 90% 42% !important;
+  --accent-pro-000: 207 90% 42% !important;
+  --accent-pro-100: 207 90% 42% !important;
+  --accent-pro-200: 207 90% 42% !important;
+  --accent-pro-900: 207 90% 42% !important;
+  --accent-secondary-000: 207 90% 42% !important;
+  --accent-secondary-100: 207 90% 42% !important;
+  --accent-secondary-200: 207 90% 42% !important;
+  --accent-secondary-900: 207 90% 42% !important;
+  --claude-foreground-color: #232627 !important;
+  --claude-background-color: #eff0f1 !important;
+  --claude-secondary-color: #7f8c8d !important;
+  --claude-border: rgba(41, 128, 185, 0.25) !important;
+  --claude-border-300: rgba(41, 128, 185, 0.25) !important;
+  --claude-border-300-more: rgba(41, 128, 185, 0.65) !important;
+  --claude-text-100: #232627 !important;
+  --claude-text-200: #31363b !important;
+  --claude-text-400: #7f8c8d !important;
+}
+
+/* Quick window and local windows - Breeze Dark */
+.darkTheme {
+  --claude-accent-clay: #3daee9 !important;
+  --accent-brand: 207 90% 54% !important;
+  --accent-main-000: 207 90% 54% !important;
+  --accent-main-100: 207 90% 54% !important;
+  --accent-main-200: 207 90% 54% !important;
+  --accent-main-900: 207 90% 54% !important;
+  --accent-pro-000: 207 90% 54% !important;
+  --accent-pro-100: 207 90% 54% !important;
+  --accent-pro-200: 207 90% 54% !important;
+  --accent-pro-900: 207 90% 54% !important;
+  --accent-secondary-000: 207 90% 54% !important;
+  --accent-secondary-100: 207 90% 54% !important;
+  --accent-secondary-200: 207 90% 54% !important;
+  --accent-secondary-900: 207 90% 54% !important;
+  --bg-000: 216 10% 16% !important;
+  --bg-100: 217 10% 13% !important;
+  --bg-200: 216 10% 10% !important;
+  --bg-300: 216 10% 7% !important;
+  --bg-400: 0 0% 0% !important;
+  --bg-500: 0 0% 0% !important;
+  --border-100: 218 10% 55% !important;
+  --border-200: 218 10% 55% !important;
+  --border-300: 218 10% 55% !important;
+  --border-400: 218 10% 55% !important;
+  --danger-000: 0 70% 65% !important;
+  --danger-100: 354 70% 60% !important;
+  --danger-200: 354 70% 60% !important;
+  --danger-900: 330 65% 70% !important;
+  --oncolor-100: 0 0% 100% !important;
+  --oncolor-200: 216 10% 97% !important;
+  --oncolor-300: 216 10% 97% !important;
+  --success-000: 97 59% 46% !important;
+  --success-100: 97 75% 33% !important;
+  --success-200: 97 75% 33% !important;
+  --success-900: 127 100% 14% !important;
+  --text-000: 218 15% 88% !important;
+  --text-100: 218 15% 88% !important;
+  --text-200: 218 10% 70% !important;
+  --text-300: 218 10% 70% !important;
+  --text-400: 218 10% 60% !important;
+  --text-500: 218 10% 60% !important;
+  --claude-foreground-color: #e1e5eb !important;
+  --claude-background-color: #26292e !important;
+  --claude-secondary-color: #9299a6 !important;
+  --claude-border: rgba(61, 174, 233, 0.25) !important;
+  --claude-border-300: rgba(61, 174, 233, 0.25) !important;
+  --claude-border-300-more: rgba(61, 174, 233, 0.65) !important;
+  --claude-text-100: #f8f9fc !important;
+  --claude-text-200: #e1e5eb !important;
+  --claude-text-400: #9299a6 !important;
+  --claude-text-500: #7d8491 !important;
+  --claude-description-text: #bdc3ce !important;
+}
+
+.darkTheme ::selection {
+  background-color: rgba(61, 174, 233, 0.3) !important;
+}
+
+/* Override clay accent on all elements */
+* {
+  --claude-accent-clay: #3daee9 !important;
+}
+
+:root:not(.darkTheme) * {
+  --claude-accent-clay: #2980b9 !important;
+}
+
 /* Dark theme - Breeze Dark */
 [data-theme=claude][data-mode=dark] {
   --accent-brand: 207 90% 54% !important;
