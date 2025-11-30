@@ -43,7 +43,7 @@ The Claude Desktop variant uses the official app's resources with patched native
 
 ### Backend
 
-By default, Claude Desktop uses [c2claude](https://github.com/can1357/c2switcher) as the backend instead of the official `claude` binary. This enables switching between different Claude Code implementations.
+By default, Claude Desktop uses [c2claude](https://github.com/can1357/c2switcher) as the backend instead of the official `claude` binary. This enables switching between different Claude Code accounts.
 
 To use the official Claude CLI instead:
 
