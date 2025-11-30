@@ -6,9 +6,11 @@ Lightweight Electron wrappers for web applications on Linux.
 
 | App | Type | Dark Mode | Notes |
 |-----|------|-----------|-------|
-| **Miro** | Web wrapper | Yes (`Ctrl+D`) | Custom dark mode with persistence |
-| **Notion** | Web wrapper | System | Uses Notion's built-in theme |
-| **Claude Desktop** | Native port | System | Full desktop app with KDE Breeze theming |
+| **Miro** | Web wrapper | Breeze Dark | Custom dark mode with persistence |
+| **Notion** | Web wrapper | Breeze Dark | Explicit theming via injected CSS |
+| **Claude Desktop** | Native port | Breeze Dark | Full desktop app with KDE Breeze theming |
+
+All apps are explicitly themed with [Breeze Dark](https://develop.kde.org/hig/style/color/) for a consistent KDE look.
 
 ## Features
 
@@ -38,6 +40,16 @@ npm run build:claude-desktop
 ## Claude Desktop (Native App)
 
 The Claude Desktop variant uses the official app's resources with patched native modules for Linux compatibility.
+
+### Backend
+
+By default, Claude Desktop uses [c2claude](https://github.com/can1357/c2switcher) as the backend instead of the official `claude` binary. This enables switching between different Claude Code implementations.
+
+To use the official Claude CLI instead:
+
+```bash
+sudo ln -sf $(which claude) /usr/local/bin/c2claude
+```
 
 ### Setup
 

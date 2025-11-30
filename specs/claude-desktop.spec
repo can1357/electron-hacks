@@ -1,5 +1,5 @@
 Name:           claude-desktop
-Version:        1.5.0
+Version:        1.6.0
 Release:        1%{?dist}
 Summary:        Claude AI desktop app for Linux
 License:        MIT
@@ -45,10 +45,10 @@ cp %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/reso
 cp %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/TrayIcon*.png %{buildroot}/opt/claude-desktop/resources/ 2>/dev/null || true
 
 # Create package.json for flat structure
-cat > %{buildroot}/opt/claude-desktop/resources/app/package.json << 'PKGJSON'
+cat > %{buildroot}/opt/claude-desktop/resources/app/package.json << PKGJSON
 {
   "name": "claude-desktop",
-  "version": "1.5.0",
+  "version": "%{version}",
   "main": "main.js"
 }
 PKGJSON

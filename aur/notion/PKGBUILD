@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=notion
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=1
 pkgdesc="Notion desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
@@ -14,6 +14,7 @@ package() {
     cd "$srcdir/electron-hacks-$pkgver"
 
     install -Dm644 notion/main.js "$pkgdir/usr/lib/$pkgname/main.js"
+    install -Dm644 notion/breeze.css "$pkgdir/usr/lib/$pkgname/breeze.css"
     install -Dm644 notion/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/notion.png"
 
     install -Dm755 /dev/stdin "$pkgdir/usr/bin/notion" <<EOF

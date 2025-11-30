@@ -1,5 +1,6 @@
 const { app, BrowserWindow, shell, Menu, nativeTheme, nativeImage, globalShortcut } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 app.setName('Notion');
 app.name = 'Notion';
@@ -9,6 +10,13 @@ if (process.platform === 'linux') {
 nativeTheme.themeSource = 'dark';
 
 const NOTION_URL = 'https://notion.so';
+
+const themePath = path.join(__dirname, 'breeze.css');
+let themeCSS = '';
+if (fs.existsSync(themePath)) {
+   themeCSS = fs.readFileSync(themePath, 'utf8');
+   console.log('[Theme] Loaded Breeze CSS:', themeCSS.length, 'bytes');
+}
 
 let mainWindow;
 
@@ -59,7 +67,7 @@ function createWindow() {
    mainWindow = new BrowserWindow({
       width: 1400,
       height: 900,
-      backgroundColor: '#191919',
+      backgroundColor: '#26292e',
       icon: nativeImage.createFromPath(path.join(__dirname, 'icon.png')),
       webPreferences: {
          nodeIntegration: false,
@@ -87,6 +95,16 @@ function createWindow() {
       mainWindow = null;
    });
 }
+
+app.on('web-contents-created', (event, webContents) => {
+   webContents.on('did-finish-load', () => {
+      const url = webContents.getURL();
+      if (!url.includes('notion.so')) return;
+      if (themeCSS) {
+         webContents.insertCSS(themeCSS).catch(() => {});
+      }
+   });
+});
 
 app.whenReady().then(() => {
    Menu.setApplicationMenu(createMenu());
