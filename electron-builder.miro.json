@@ -10,10 +10,11 @@
   ],
   "asar": false,
   "extraMetadata": {
-    "name": "miro-electron",
+    "name": "miro",
     "main": "miro/main.js"
   },
   "linux": {
+    "artifactName": "${name}-${version}-${arch}.${ext}",
     "target": ["AppImage", "deb"],
     "category": "Office",
     "icon": "miro/icon.png",

@@ -20,6 +20,7 @@
     "main": "claude-desktop/main-desktop.js"
   },
   "linux": {
+    "artifactName": "${name}-${version}-${arch}.${ext}",
     "target": ["AppImage", "deb"],
     "category": "Office",
     "icon": "claude-desktop/icon.png",
