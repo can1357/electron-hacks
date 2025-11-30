@@ -34,7 +34,7 @@ cp %{_sourcedir}/claude-desktop/auto-approve.js %{buildroot}/opt/claude-desktop/
 cp %{_sourcedir}/claude-desktop/breeze.css %{buildroot}/opt/claude-desktop/resources/app/
 cp %{_sourcedir}/claude-desktop/icon.png %{buildroot}/opt/claude-desktop/resources/app/
 
-# Copy Claude app (.vite, node_modules, etc) from the nested location
+# Copy Claude app (.vite, node_modules) from electron-builder output
 cp -r %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/app/.vite %{buildroot}/opt/claude-desktop/resources/app/
 cp -r %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/app/node_modules %{buildroot}/opt/claude-desktop/resources/app/
 

@@ -55,6 +55,16 @@ for (const file of appFiles) {
    }
 }
 
+// Debug: print structure before rpmbuild
+console.log('=== linux-unpacked/resources/app structure ===');
+try {
+   const appPath = path.join(sourcesDir, 'linux-unpacked', 'resources', 'app');
+   execSync(`find ${appPath} -maxdepth 5`, { stdio: 'inherit' });
+} catch (e) {
+   console.log('Could not list app directory');
+}
+console.log('==============================================');
+
 execSync(`rpmbuild --define "_topdir ${topdir}" -bb ${specDst}`, { stdio: 'inherit' });
 
 // Copy built RPM to dist/{app}/

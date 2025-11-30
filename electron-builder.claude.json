@@ -11,15 +11,16 @@
     "claude-desktop/native-stub.js",
     "claude-desktop/auto-approve.js",
     "claude-desktop/icon.png",
-    "claude-desktop/resources/**/*",
-    {
-      "from": "claude-desktop/resources/app/.vite",
-      "to": ".vite"
-    },
-    {
-      "from": "claude-desktop/resources/app/node_modules",
-      "to": "node_modules"
-    }
+    "claude-desktop/resources/*.json",
+    "claude-desktop/resources/TrayIcon*.png",
+    "claude-desktop/resources/fonts/**/*",
+    "claude-desktop/resources/app/**/*",
+    "!claude-desktop/resources/app/main.js",
+    "!claude-desktop/resources/app/breeze.css",
+    "!claude-desktop/resources/app/native-stub.js",
+    "!claude-desktop/resources/app/auto-approve.js",
+    "!claude-desktop/resources/app/icon.png",
+    "!claude-desktop/resources/app/package.json"
   ],
   "asar": false,
   "extraMetadata": {
