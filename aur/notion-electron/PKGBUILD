@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=notion-electron
-pkgver=1.4.2
+pkgver=1.4.3
 pkgrel=1
 pkgdesc="Notion desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
