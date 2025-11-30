@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
-pkgname=miro-electron
-pkgver=1.4.5
+pkgname=miro
+pkgver=1.4.6
 pkgrel=1
 pkgdesc="Miro desktop app for Linux (Electron wrapper with dark mode)"
 arch=('x86_64')
@@ -16,7 +16,6 @@ package() {
     install -Dm644 miro/main.js "$pkgdir/usr/lib/$pkgname/main.js"
     install -Dm644 miro/dark.css "$pkgdir/usr/lib/$pkgname/dark.css"
     install -Dm644 miro/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/miro.png"
-    ln -s miro.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/miro-electron.png"
 
     install -Dm755 /dev/stdin "$pkgdir/usr/bin/miro" <<EOF
 #!/bin/bash
@@ -31,7 +30,7 @@ Exec=miro %U
 Icon=miro
 Type=Application
 Categories=Office;ProjectManagement;
-StartupWMClass=miro-electron
+StartupWMClass=miro
 EOF
 
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE" 2>/dev/null || true

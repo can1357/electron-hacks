@@ -119,9 +119,9 @@ npm run new-app -- figma https://figma.com --dark
 PKGBUILDs available in `aur/`:
 
 ```bash
-cd aur/miro-electron && makepkg -si
-cd aur/notion-electron && makepkg -si
-cd aur/claude-desktop-electron && makepkg -si
+cd aur/miro && makepkg -si
+cd aur/notion && makepkg -si
+cd aur/claude-desktop && makepkg -si
 ```
 
 ## Credits

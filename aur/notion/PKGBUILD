@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
-pkgname=notion-electron
-pkgver=1.4.5
+pkgname=notion
+pkgver=1.4.6
 pkgrel=1
 pkgdesc="Notion desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
@@ -15,7 +15,6 @@ package() {
 
     install -Dm644 notion/main.js "$pkgdir/usr/lib/$pkgname/main.js"
     install -Dm644 notion/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/notion.png"
-    ln -s notion.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/notion-electron.png"
 
     install -Dm755 /dev/stdin "$pkgdir/usr/bin/notion" <<EOF
 #!/bin/bash
@@ -30,7 +29,7 @@ Exec=notion %U
 Icon=notion
 Type=Application
 Categories=Office;
-StartupWMClass=notion-electron
+StartupWMClass=notion
 EOF
 
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE" 2>/dev/null || true

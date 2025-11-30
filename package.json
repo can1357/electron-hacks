@@ -1,6 +1,6 @@
 {
   "name": "electron-hacks",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Electron wrappers for web apps",
   "scripts": {
     "version": "node scripts/sync-version.js && git add aur/*/PKGBUILD specs/*.spec",
@@ -16,21 +16,21 @@
     "build:miro:appimage": "electron-builder --config electron-builder.miro.json --linux AppImage",
     "install:miro:deb": "sudo apt install ./dist/miro/*.deb",
     "install:miro:rpm": "sudo rpm -Uvh --force ./rpmbuild/RPMS/*/miro-*.rpm",
-    "install:miro:aur": "cd aur/miro-electron && makepkg -si",
+    "install:miro:aur": "cd aur/miro && makepkg -si",
     "build:notion": "electron-builder --config electron-builder.notion.json --linux AppImage deb dir && node build-rpm.js notion",
     "build:notion:deb": "electron-builder --config electron-builder.notion.json --linux deb",
     "build:notion:rpm": "node build-rpm.js notion",
     "build:notion:appimage": "electron-builder --config electron-builder.notion.json --linux AppImage",
     "install:notion:deb": "sudo apt install ./dist/notion/*.deb",
     "install:notion:rpm": "sudo rpm -Uvh --force ./rpmbuild/RPMS/*/notion-*.rpm",
-    "install:notion:aur": "cd aur/notion-electron && makepkg -si",
+    "install:notion:aur": "cd aur/notion && makepkg -si",
     "build:claude-desktop": "electron-builder --config electron-builder.claude.json --linux AppImage deb dir && node build-rpm.js claude-desktop",
     "build:claude-desktop:deb": "electron-builder --config electron-builder.claude.json --linux deb",
     "build:claude-desktop:rpm": "node build-rpm.js claude-desktop",
     "build:claude-desktop:appimage": "electron-builder --config electron-builder.claude.json --linux AppImage",
     "install:claude-desktop:deb": "sudo apt install ./dist/claude-desktop/*.deb",
     "install:claude-desktop:rpm": "sudo rpm -Uvh --force ./rpmbuild/RPMS/*/claude-desktop-*.rpm",
-    "install:claude-desktop:aur": "cd aur/claude-desktop-electron && makepkg -si",
+    "install:claude-desktop:aur": "cd aur/claude-desktop && makepkg -si",
     "build:all": "npm run build:miro & npm run build:notion & npm run build:claude-desktop & wait"
   },
   "keywords": [

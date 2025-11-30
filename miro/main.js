@@ -4,6 +4,9 @@ const fs = require('fs');
 
 app.setName('Miro');
 app.name = 'Miro';
+if (process.platform === 'linux') {
+   app.setDesktopName('miro.desktop');
+}
 nativeTheme.themeSource = 'dark';
 
 const MIRO_URL = 'https://miro.com';

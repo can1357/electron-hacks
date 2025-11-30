@@ -5,9 +5,9 @@ const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'
 const version = pkg.version;
 
 const files = [
-   { path: 'aur/miro-electron/PKGBUILD', pattern: /^pkgver=.*/m, replacement: `pkgver=${version}` },
-   { path: 'aur/notion-electron/PKGBUILD', pattern: /^pkgver=.*/m, replacement: `pkgver=${version}` },
-   { path: 'aur/claude-desktop-electron/PKGBUILD', pattern: /^pkgver=.*/m, replacement: `pkgver=${version}` },
+   { path: 'aur/miro/PKGBUILD', pattern: /^pkgver=.*/m, replacement: `pkgver=${version}` },
+   { path: 'aur/notion/PKGBUILD', pattern: /^pkgver=.*/m, replacement: `pkgver=${version}` },
+   { path: 'aur/claude-desktop/PKGBUILD', pattern: /^pkgver=.*/m, replacement: `pkgver=${version}` },
    { path: 'specs/miro.spec', pattern: /^Version:\s+.*/m, replacement: `Version:        ${version}` },
    { path: 'specs/notion.spec', pattern: /^Version:\s+.*/m, replacement: `Version:        ${version}` },
    { path: 'specs/claude-desktop.spec', pattern: /^Version:\s+.*/m, replacement: `Version:        ${version}` },

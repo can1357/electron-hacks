@@ -8,6 +8,9 @@ const os = require('os');
 // Set app identity before anything else
 app.setName('Claude');
 app.setPath('userData', path.join(os.homedir(), '.config', 'Claude'));
+if (process.platform === 'linux') {
+   app.setDesktopName('claude-desktop.desktop');
+}
 
 // Frame fix must load early
 console.log('[main-desktop] Loading frame-fix...');

@@ -246,7 +246,7 @@ const builderConfig = {
    files: [`${name}/**/*`],
    asar: false,
    extraMetadata: {
-      name: `${name}-electron`,
+      name: `${name}`,
       main: `${name}/main.js`
    },
    linux: {

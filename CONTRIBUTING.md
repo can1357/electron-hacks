@@ -48,7 +48,7 @@ Or manually:
 
 6. For RPM support, add `specs/myapp.spec`
 
-7. For AUR support, add `aur/myapp-electron/PKGBUILD`
+7. For AUR support, add `aur/myapp/PKGBUILD`
 
 ## Adding Dark Mode
 

@@ -3,6 +3,9 @@ const path = require('path');
 
 app.setName('Notion');
 app.name = 'Notion';
+if (process.platform === 'linux') {
+   app.setDesktopName('notion.desktop');
+}
 nativeTheme.themeSource = 'dark';
 
 const NOTION_URL = 'https://notion.so';
