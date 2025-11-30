@@ -96,6 +96,10 @@ CLAUDE_NO_YOLO=1 claude-desktop
 touch ~/.config/Claude/no-yolo
 ```
 
+### Force Extended Thinking
+
+Extended thinking is **always enabled** - a script automatically clicks the "Extended thinking" button whenever it appears disabled.
+
 ## Build Targets
 
 ```bash

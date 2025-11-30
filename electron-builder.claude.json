@@ -10,6 +10,7 @@
     "claude-desktop/breeze.css",
     "claude-desktop/native-stub.js",
     "claude-desktop/auto-approve.js",
+    "claude-desktop/force-thinking.js",
     "claude-desktop/icon.png",
     "claude-desktop/resources/**/*",
     {

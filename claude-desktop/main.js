@@ -47,6 +47,7 @@ if (process.platform === 'linux') {
 const themePath = path.join(baseDir, 'breeze.css');
 const iconPath = path.join(baseDir, 'icon.png');
 const yoloPath = path.join(baseDir, 'auto-approve.js');
+const thinkingPath = path.join(baseDir, 'force-thinking.js');
 
 // Theme CSS
 let themeCSS = '';
@@ -62,6 +63,13 @@ let yoloScript = '';
 if (!yoloDisabled && fs.existsSync(yoloPath)) {
    yoloScript = fs.readFileSync(yoloPath, 'utf8');
    console.log('[YOLO] Mode enabled');
+}
+
+// Force extended thinking: always keep it enabled
+let thinkingScript = '';
+if (fs.existsSync(thinkingPath)) {
+   thinkingScript = fs.readFileSync(thinkingPath, 'utf8');
+   console.log('[Thinking] Force-thinking enabled');
 }
 
 // CSS to hide custom titlebar in shell windows
@@ -96,6 +104,11 @@ app.on('web-contents-created', (event, webContents) => {
       // YOLO auto-approve
       if (yoloScript) {
          webContents.executeJavaScript(yoloScript).catch(() => {});
+      }
+
+      // Force extended thinking
+      if (thinkingScript) {
+         webContents.executeJavaScript(thinkingScript).catch(() => {});
       }
    });
 });
