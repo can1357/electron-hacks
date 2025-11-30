@@ -221,16 +221,14 @@ function patchCode() {
          console.log('  Patched: Linux claude-code binary support');
       }
 
-      // Replace claude/claude.exe binary name with c2claude
-      code = code.replace(/process\.platform==="win32"\?"claude\.exe":"claude"/g, '"c2claude"');
-      console.log('  Patched: claude binary name -> c2claude');
-
-      // Use c2claude from PATH instead of managed binary in storageDir
-      code = code.replace(
-         /async getBinaryPathIfReady\(\)\{return await this\.binaryExists\(this\.requiredVersion\)\?this\.getBinaryPath\(this\.requiredVersion\):null\}/,
-         'async getBinaryPathIfReady(){return"c2claude"}'
-      );
-      console.log('  Patched: getBinaryPathIfReady -> use c2claude from PATH');
+      // c2claude patches disabled for now
+      // code = code.replace(/process\.platform==="win32"\?"claude\.exe":"claude"/g, '"c2claude"');
+      // console.log('  Patched: claude binary name -> c2claude');
+      // code = code.replace(
+      //    /async getBinaryPathIfReady\(\)\{return await this\.binaryExists\(this\.requiredVersion\)\?this\.getBinaryPath\(this\.requiredVersion\):null\}/,
+      //    'async getBinaryPathIfReady(){return"c2claude"}'
+      // );
+      // console.log('  Patched: getBinaryPathIfReady -> use c2claude from PATH');
 
       // Bypass permissions mode (for Claude Code)
       code = code.replace(/permissionMode:"default"/g, 'permissionMode:"bypassPermissions"');
