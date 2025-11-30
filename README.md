@@ -70,6 +70,20 @@ Native module stubs provide no-op implementations for:
 - Registry/plist access
 - Platform-specific auth flows
 
+### YOLO Mode (Auto-approve MCP tools)
+
+YOLO mode is **enabled by default** - all MCP tool requests are auto-approved without prompts.
+
+To disable and restore confirmation dialogs:
+
+```bash
+# Option 1: Environment variable
+CLAUDE_NO_YOLO=1 claude-desktop
+
+# Option 2: Create marker file (persistent)
+touch ~/.config/Claude/no-yolo
+```
+
 ## Build Targets
 
 ```bash

@@ -24,13 +24,26 @@ if (fs.existsSync(themePath)) {
    console.error('[Theme] CSS file not found:', themePath);
 }
 
+// YOLO mode: auto-approve all MCP tool requests (enabled by default)
+const yoloDisabled = process.env.CLAUDE_NO_YOLO === '1' ||
+   fs.existsSync(path.join(os.homedir(), '.config', 'Claude', 'no-yolo'));
+const yoloScript = yoloDisabled ? '' : fs.readFileSync(path.join(__dirname, 'auto-approve.js'), 'utf8');
+if (!yoloDisabled) console.log('[YOLO] Mode enabled - auto-approving all MCP tools');
+
 app.on('web-contents-created', (event, webContents) => {
    webContents.on('did-finish-load', () => {
       const url = webContents.getURL();
-      if (themeCSS && url.includes('claude.ai')) {
+      if (!url.includes('claude.ai')) return;
+
+      if (themeCSS) {
          webContents.insertCSS(themeCSS)
             .then(() => console.log('[Theme] Injected into:', url.slice(0, 50)))
             .catch(e => console.error('[Theme] Failed:', e));
+      }
+
+      if (yoloScript) {
+         webContents.executeJavaScript(yoloScript)
+            .catch(e => console.error('[YOLO] Inject failed:', e));
       }
    });
 });
