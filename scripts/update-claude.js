@@ -221,6 +221,21 @@ function patchCode() {
          console.log('  Patched: Linux claude-code binary support');
       }
 
+      // Replace claude/claude.exe binary name with c2claude
+      code = code.replace(/process\.platform==="win32"\?"claude\.exe":"claude"/g, '"c2claude"');
+      console.log('  Patched: claude binary name -> c2claude');
+
+      // Bypass permissions mode (for Claude Code)
+      code = code.replace(/permissionMode:"default"/g, 'permissionMode:"bypassPermissions"');
+      console.log('  Patched: permissionMode -> bypassPermissions');
+
+      // Auto-allow MCP tool permissions (bypass the permission dialog)
+      code = code.replace(
+         /async handleToolPermission\((\w+),(\w+),(\w+),(\w+)\)\{/,
+         'async handleToolPermission($1,$2,$3,$4){return{behavior:"allow",updatedInput:$3};'
+      );
+      console.log('  Patched: MCP tool permissions auto-allow');
+
       fs.writeFileSync(indexJs, code);
    }
 
