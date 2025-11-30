@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=claude-desktop
-pkgver=1.4.7
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="Claude AI desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
@@ -14,9 +14,9 @@ sha256sums=('SKIP')
 package() {
     cd "$srcdir/electron-hacks-$pkgver"
 
-    install -Dm644 claude-desktop/main-desktop.js "$pkgdir/usr/lib/$pkgname/main.js"
-    install -Dm644 claude-desktop/frame-fix.js "$pkgdir/usr/lib/$pkgname/frame-fix.js"
+    install -Dm644 claude-desktop/main.js "$pkgdir/usr/lib/$pkgname/main.js"
     install -Dm644 claude-desktop/native-stub.js "$pkgdir/usr/lib/$pkgname/native-stub.js"
+    install -Dm644 claude-desktop/auto-approve.js "$pkgdir/usr/lib/$pkgname/auto-approve.js"
     install -Dm644 claude-desktop/breeze.css "$pkgdir/usr/lib/$pkgname/breeze.css"
     install -Dm644 claude-desktop/icon.png "$pkgdir/usr/lib/$pkgname/icon.png"
     install -Dm644 claude-desktop/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/claude.png"

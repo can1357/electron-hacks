@@ -44,16 +44,15 @@ if (!fs.existsSync(unpackedSrc)) {
    process.exit(1);
 }
 
-const iconSrc = path.resolve(__dirname, `${app}/icon.png`);
-const iconDst = path.join(sourcesDir, 'icon.png');
-
 fs.symlinkSync(unpackedSrc, unpackedDst);
-fs.symlinkSync(iconSrc, iconDst);
 
-// Copy additional scripts if they exist
-const quickSrc = path.resolve(__dirname, `${app}/claude-quick`);
-if (fs.existsSync(quickSrc)) {
-   fs.symlinkSync(quickSrc, path.join(sourcesDir, 'claude-quick'));
+// Symlink app files needed by spec
+const appFiles = ['main.js', 'native-stub.js', 'auto-approve.js', 'breeze.css', 'icon.png', 'claude-quick'];
+for (const file of appFiles) {
+   const src = path.resolve(__dirname, `${app}/${file}`);
+   if (fs.existsSync(src)) {
+      fs.symlinkSync(src, path.join(sourcesDir, file));
+   }
 }
 
 execSync(`rpmbuild --define "_topdir ${topdir}" -bb ${specDst}`, { stdio: 'inherit' });

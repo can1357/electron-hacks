@@ -1,6 +1,6 @@
 {
   "name": "electron-hacks",
-  "version": "1.4.7",
+  "version": "1.5.0",
   "description": "Electron wrappers for web apps",
   "scripts": {
     "version": "node scripts/sync-version.js && git add aur/*/PKGBUILD specs/*.spec",
@@ -9,7 +9,7 @@
     "update-claude": "node scripts/update-claude.js",
     "start:miro": "electron miro/main.js",
     "start:notion": "electron notion/main.js",
-    "start:claude-desktop": "electron --no-sandbox claude-desktop/resources/app",
+    "start:claude-desktop": "electron --no-sandbox claude-desktop/main.js",
     "build:miro": "electron-builder --config electron-builder.miro.json --linux AppImage deb dir && node build-rpm.js miro",
     "build:miro:deb": "electron-builder --config electron-builder.miro.json --linux deb",
     "build:miro:rpm": "node build-rpm.js miro",

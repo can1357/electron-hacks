@@ -1,5 +1,5 @@
 Name:           claude-desktop
-Version:        1.4.7
+Version:        1.5.0
 Release:        1%{?dist}
 Summary:        Claude AI desktop app for Linux
 License:        MIT
@@ -19,8 +19,43 @@ mkdir -p %{buildroot}/usr/bin
 mkdir -p %{buildroot}/usr/share/applications
 mkdir -p %{buildroot}/usr/share/icons/hicolor/512x512/apps
 
-cp -r %{_sourcedir}/claude-desktop/linux-unpacked/* %{buildroot}/opt/claude-desktop/
+# Copy entire Electron runtime (follow symlinks)
+cp -rL %{_sourcedir}/claude-desktop/linux-unpacked/. %{buildroot}/opt/claude-desktop/
+
+# Remove the nested app structure created by electron-builder
+rm -rf %{buildroot}/opt/claude-desktop/resources/app
 rm -f %{buildroot}/opt/claude-desktop/resources/app.asar
+
+# Create flat resources/app with our patches + Claude app
+mkdir -p %{buildroot}/opt/claude-desktop/resources/app
+cp %{_sourcedir}/claude-desktop/main.js %{buildroot}/opt/claude-desktop/resources/app/
+cp %{_sourcedir}/claude-desktop/native-stub.js %{buildroot}/opt/claude-desktop/resources/app/
+cp %{_sourcedir}/claude-desktop/auto-approve.js %{buildroot}/opt/claude-desktop/resources/app/
+cp %{_sourcedir}/claude-desktop/breeze.css %{buildroot}/opt/claude-desktop/resources/app/
+cp %{_sourcedir}/claude-desktop/icon.png %{buildroot}/opt/claude-desktop/resources/app/
+
+# Copy Claude app (.vite, node_modules, etc) from the nested location
+cp -r %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/app/.vite %{buildroot}/opt/claude-desktop/resources/app/
+cp -r %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/app/node_modules %{buildroot}/opt/claude-desktop/resources/app/
+
+# Copy i18n files to resources/ (for process.resourcesPath lookup)
+cp %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/*.json %{buildroot}/opt/claude-desktop/resources/
+
+# Copy tray icons
+cp %{_sourcedir}/claude-desktop/linux-unpacked/resources/app/claude-desktop/resources/TrayIcon*.png %{buildroot}/opt/claude-desktop/resources/ 2>/dev/null || true
+
+# Create package.json for flat structure
+cat > %{buildroot}/opt/claude-desktop/resources/app/package.json << 'PKGJSON'
+{
+  "name": "claude-desktop",
+  "version": "1.5.0",
+  "main": "main.js"
+}
+PKGJSON
+
+# Fix permissions (source files may have restrictive modes)
+chmod -R a+rX %{buildroot}/opt/claude-desktop
+
 cp %{_sourcedir}/claude-desktop/icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/claude.png
 
 cat > %{buildroot}/usr/bin/claude-desktop << 'EOF'

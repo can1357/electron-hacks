@@ -268,41 +268,25 @@ function patchCode() {
    }
 }
 
-function installPreload() {
-   console.log('\n🎨 Installing preload wrapper...');
+function installMain() {
+   console.log('\n🎨 Installing main entry point...');
 
-   // Copy theme CSS
-   const themeSrc = path.join(claudeDir, 'breeze.css');
-   if (fs.existsSync(themeSrc)) {
-      fs.copyFileSync(themeSrc, path.join(appDir, 'breeze.css'));
-      console.log('  Copied: breeze.css');
-   }
-
-   // Copy icon
-   const iconSrc = path.join(claudeDir, 'icon.png');
-   if (fs.existsSync(iconSrc)) {
-      fs.copyFileSync(iconSrc, path.join(appDir, 'icon.png'));
-      console.log('  Copied: icon.png');
-   }
-
-   // Copy preload.js wrapper
-   const preloadSrc = path.join(claudeDir, 'preload.js');
-   fs.copyFileSync(preloadSrc, path.join(appDir, 'preload.js'));
-   console.log('  Copied: preload.js');
-
-   // Copy auto-approve.js for YOLO mode
-   const autoApproveSrc = path.join(claudeDir, 'auto-approve.js');
-   if (fs.existsSync(autoApproveSrc)) {
-      fs.copyFileSync(autoApproveSrc, path.join(appDir, 'auto-approve.js'));
-      console.log('  Copied: auto-approve.js');
+   // Copy supporting files
+   const filesToCopy = ['main.js', 'native-stub.js', 'auto-approve.js', 'breeze.css', 'icon.png'];
+   for (const file of filesToCopy) {
+      const src = path.join(claudeDir, file);
+      if (fs.existsSync(src)) {
+         fs.copyFileSync(src, path.join(appDir, file));
+         console.log(`  Copied: ${file}`);
+      }
    }
 
    // Update package.json entry point
    const pkgPath = path.join(appDir, 'package.json');
    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
-   pkg.main = 'preload.js';
+   pkg.main = 'main.js';
    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
-   console.log('  Updated: package.json main -> preload.js');
+   console.log('  Updated: package.json main -> main.js');
 }
 
 function copyUnpacked(resourcesSrc) {
@@ -354,7 +338,7 @@ async function main() {
       extractAsar(resourcesSrc);
       patchNativeModule();
       patchCode();
-      installPreload();
+      installMain();
       copyUnpacked(resourcesSrc);
 
       const version = getVersion();
