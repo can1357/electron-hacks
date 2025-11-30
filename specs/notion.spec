@@ -1,5 +1,5 @@
 Name:           notion
-Version:        1.4.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        Notion desktop app for Linux
 License:        MIT

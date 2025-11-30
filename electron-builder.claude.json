@@ -12,7 +12,15 @@
     "claude-desktop/native-stub.js",
     "claude-desktop/preload.js",
     "claude-desktop/icon.png",
-    "claude-desktop/resources/**/*"
+    "claude-desktop/resources/**/*",
+    {
+      "from": "claude-desktop/resources/app/.vite",
+      "to": ".vite"
+    },
+    {
+      "from": "claude-desktop/resources/app/node_modules",
+      "to": "node_modules"
+    }
   ],
   "asar": false,
   "extraMetadata": {

@@ -1,5 +1,5 @@
 Name:           claude-desktop
-Version:        1.4.0
+Version:        1.4.1
 Release:        1%{?dist}
 Summary:        Claude AI desktop app for Linux
 License:        MIT
