@@ -1,5 +1,5 @@
 Name:           miro
-Version:        1.4.6
+Version:        1.4.7
 Release:        1%{?dist}
 Summary:        Miro desktop app for Linux
 License:        MIT

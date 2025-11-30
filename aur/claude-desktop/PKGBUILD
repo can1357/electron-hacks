@@ -1,12 +1,13 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=claude-desktop
-pkgver=1.4.6
+pkgver=1.4.7
 pkgrel=1
 pkgdesc="Claude AI desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
 url="https://github.com/can1357/electron-hacks"
 license=('MIT')
 depends=('electron' 'hicolor-icon-theme')
+optdepends=('xdotool: for claude-quick on X11')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
@@ -15,9 +16,11 @@ package() {
 
     install -Dm644 claude-desktop/main-desktop.js "$pkgdir/usr/lib/$pkgname/main.js"
     install -Dm644 claude-desktop/frame-fix.js "$pkgdir/usr/lib/$pkgname/frame-fix.js"
+    install -Dm644 claude-desktop/native-stub.js "$pkgdir/usr/lib/$pkgname/native-stub.js"
     install -Dm644 claude-desktop/breeze.css "$pkgdir/usr/lib/$pkgname/breeze.css"
     install -Dm644 claude-desktop/icon.png "$pkgdir/usr/lib/$pkgname/icon.png"
     install -Dm644 claude-desktop/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/claude.png"
+    install -Dm755 claude-desktop/claude-quick "$pkgdir/usr/bin/claude-quick"
     cp -r claude-desktop/resources "$pkgdir/usr/lib/$pkgname/"
 
     install -Dm755 /dev/stdin "$pkgdir/usr/bin/claude-desktop" <<EOF

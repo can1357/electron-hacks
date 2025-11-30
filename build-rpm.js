@@ -50,6 +50,12 @@ const iconDst = path.join(sourcesDir, 'icon.png');
 fs.symlinkSync(unpackedSrc, unpackedDst);
 fs.symlinkSync(iconSrc, iconDst);
 
+// Copy additional scripts if they exist
+const quickSrc = path.resolve(__dirname, `${app}/claude-quick`);
+if (fs.existsSync(quickSrc)) {
+   fs.symlinkSync(quickSrc, path.join(sourcesDir, 'claude-quick'));
+}
+
 execSync(`rpmbuild --define "_topdir ${topdir}" -bb ${specDst}`, { stdio: 'inherit' });
 
 // Copy built RPM to dist/{app}/

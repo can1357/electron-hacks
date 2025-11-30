@@ -36,15 +36,31 @@ module.exports = {
    readCfPrefValue: () => null,
    getAppInfoForFile: () => null,
    getActiveWindowHandle: () => {
+      // Use KWin DBus to get the actual focused window (works with non-Electron windows)
+      try {
+         const { execSync } = require('child_process');
+         const uuid = execSync('qdbus-qt6 org.kde.KWin /KWin org.kde.KWin.activeWindow 2>/dev/null', { encoding: 'utf8' }).trim();
+         if (uuid) return { handle: uuid, isKwin: true };
+      } catch {}
+      // Fallback to Electron window
       const BW = getBrowserWindow();
       const win = BW.getFocusedWindow() || BW.getAllWindows()[0];
       return { handle: win ? win.id : 0 };
    },
    focusWindow: (handle) => {
-      const BW = getBrowserWindow();
+      if (!handle) return;
       let id = typeof handle === 'object' ? handle?.handle : handle;
-      // If no valid handle, don't force-raise any window (e.g., Claude was in tray)
+      // KWin UUID - restore via DBus
+      if (typeof handle === 'object' && handle?.isKwin && typeof id === 'string') {
+         try {
+            const { execSync } = require('child_process');
+            execSync(`qdbus-qt6 org.kde.KWin /KWin org.kde.KWin.activateWindowByUuid "${id}" 2>/dev/null`);
+            return;
+         } catch {}
+      }
+      // Fallback: Electron window ID
       if (typeof id !== 'number' || id <= 0) return;
+      const BW = getBrowserWindow();
       try {
          const win = BW.fromId(id);
          if (win && !win.isDestroyed()) {

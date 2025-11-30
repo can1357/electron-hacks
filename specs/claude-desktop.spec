@@ -1,5 +1,5 @@
 Name:           claude-desktop
-Version:        1.4.6
+Version:        1.4.7
 Release:        1%{?dist}
 Summary:        Claude AI desktop app for Linux
 License:        MIT
@@ -29,6 +29,9 @@ cat > %{buildroot}/usr/bin/claude-desktop << 'EOF'
 EOF
 chmod +x %{buildroot}/usr/bin/claude-desktop
 
+cp %{_sourcedir}/claude-desktop/claude-quick %{buildroot}/usr/bin/claude-quick
+chmod +x %{buildroot}/usr/bin/claude-quick
+
 cat > %{buildroot}/usr/share/applications/claude-desktop.desktop << 'EOF'
 [Desktop Entry]
 Name=Claude
@@ -43,6 +46,7 @@ EOF
 %files
 /opt/claude-desktop
 /usr/bin/claude-desktop
+/usr/bin/claude-quick
 /usr/share/applications/claude-desktop.desktop
 /usr/share/icons/hicolor/512x512/apps/claude.png
 

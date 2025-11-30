@@ -290,6 +290,13 @@ function installPreload() {
    fs.copyFileSync(preloadSrc, path.join(appDir, 'preload.js'));
    console.log('  Copied: preload.js');
 
+   // Copy auto-approve.js for YOLO mode
+   const autoApproveSrc = path.join(claudeDir, 'auto-approve.js');
+   if (fs.existsSync(autoApproveSrc)) {
+      fs.copyFileSync(autoApproveSrc, path.join(appDir, 'auto-approve.js'));
+      console.log('  Copied: auto-approve.js');
+   }
+
    // Update package.json entry point
    const pkgPath = path.join(appDir, 'package.json');
    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));

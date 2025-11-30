@@ -1,6 +1,6 @@
 {
   "name": "electron-hacks",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "description": "Electron wrappers for web apps",
   "scripts": {
     "version": "node scripts/sync-version.js && git add aur/*/PKGBUILD specs/*.spec",

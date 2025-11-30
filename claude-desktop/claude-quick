@@ -1,0 +1,22 @@
+#!/bin/bash
+# claude-quick - Activate Claude's quick entry via tray icon
+# Bind this to a global shortcut (works on both X11 and Wayland/KDE)
+
+if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+  # X11: Use xdotool to send the configured shortcut
+  shortcut=$(grep -o '"globalShortcut":"[^"]*"' ~/.config/Claude/config.json 2>/dev/null | cut -d'"' -f4)
+  shortcut=${shortcut:-"alt+ctrl+space"}
+  # Convert to xdotool format
+  shortcut=$(echo "$shortcut" | sed 's/Ctrl/ctrl/g; s/Alt/alt/g; s/Shift/shift/g; s/\+/ /g')
+  xdotool key $shortcut
+else
+  # Wayland/KDE: Activate via StatusNotifierItem DBus
+  for item in $(qdbus-qt6 org.kde.StatusNotifierWatcher /StatusNotifierWatcher RegisteredStatusNotifierItems 2>/dev/null); do
+    bus="${item%%/*}"
+    pid=$(dbus-send --session --print-reply --dest=org.freedesktop.DBus / org.freedesktop.DBus.GetConnectionUnixProcessID "string:$bus" 2>/dev/null | grep uint32 | awk '{print $2}')
+    if [[ -n "$pid" ]] && grep -q "claude" /proc/$pid/cmdline 2>/dev/null; then
+      gdbus call --session --dest="$bus" --object-path=/StatusNotifierItem --method=org.kde.StatusNotifierItem.Activate 0 0
+      exit 0
+    fi
+  done
+fi
