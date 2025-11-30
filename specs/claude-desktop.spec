@@ -1,5 +1,5 @@
 Name:           claude-desktop
-Version:        1.4.3
+Version:        1.4.4
 Release:        1%{?dist}
 Summary:        Claude AI desktop app for Linux
 License:        MIT
@@ -37,7 +37,7 @@ Exec=claude-desktop %U
 Icon=claude
 Type=Application
 Categories=Office;
-StartupWMClass=Claude
+StartupWMClass=claude-electron
 EOF
 
 %files

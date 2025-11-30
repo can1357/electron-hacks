@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=notion-electron
-pkgver=1.4.3
+pkgver=1.4.4
 pkgrel=1
 pkgdesc="Notion desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
@@ -29,7 +29,7 @@ Exec=notion %U
 Icon=notion
 Type=Application
 Categories=Office;
-StartupWMClass=Notion
+StartupWMClass=notion-electron
 EOF
 
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE" 2>/dev/null || true

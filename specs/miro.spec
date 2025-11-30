@@ -1,5 +1,5 @@
 Name:           miro
-Version:        1.4.3
+Version:        1.4.4
 Release:        1%{?dist}
 Summary:        Miro desktop app for Linux
 License:        MIT
@@ -37,7 +37,7 @@ Exec=miro %U
 Icon=miro
 Type=Application
 Categories=Office;ProjectManagement;
-StartupWMClass=Miro
+StartupWMClass=miro-electron
 EOF
 
 %files

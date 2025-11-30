@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=miro-electron
-pkgver=1.4.3
+pkgver=1.4.4
 pkgrel=1
 pkgdesc="Miro desktop app for Linux (Electron wrapper with dark mode)"
 arch=('x86_64')
@@ -30,7 +30,7 @@ Exec=miro %U
 Icon=miro
 Type=Application
 Categories=Office;ProjectManagement;
-StartupWMClass=Miro
+StartupWMClass=miro-electron
 EOF
 
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE" 2>/dev/null || true

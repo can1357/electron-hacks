@@ -1,5 +1,5 @@
 Name:           notion
-Version:        1.4.3
+Version:        1.4.4
 Release:        1%{?dist}
 Summary:        Notion desktop app for Linux
 License:        MIT
@@ -37,7 +37,7 @@ Exec=notion %U
 Icon=notion
 Type=Application
 Categories=Office;
-StartupWMClass=Notion
+StartupWMClass=notion-electron
 EOF
 
 %files

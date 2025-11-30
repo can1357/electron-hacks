@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=claude-desktop-electron
-pkgver=1.4.3
+pkgver=1.4.4
 pkgrel=1
 pkgdesc="Claude AI desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
@@ -33,7 +33,7 @@ Exec=claude-desktop %U
 Icon=claude
 Type=Application
 Categories=Office;
-StartupWMClass=Claude
+StartupWMClass=claude-electron
 EOF
 
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE" 2>/dev/null || true
