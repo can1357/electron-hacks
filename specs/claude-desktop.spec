@@ -1,5 +1,5 @@
 Name:           claude-desktop
-Version:        1.4.4
+Version:        1.4.5
 Release:        1%{?dist}
 Summary:        Claude AI desktop app for Linux
 License:        MIT
@@ -22,6 +22,7 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/512x512/apps
 cp -r %{_sourcedir}/claude-desktop/linux-unpacked/* %{buildroot}/opt/claude-desktop/
 rm -f %{buildroot}/opt/claude-desktop/resources/app.asar
 cp %{_sourcedir}/claude-desktop/icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/claude.png
+ln -s claude.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/claude-electron.png
 
 cat > %{buildroot}/usr/bin/claude-desktop << 'EOF'
 #!/bin/bash
@@ -45,5 +46,6 @@ EOF
 /usr/bin/claude-desktop
 /usr/share/applications/claude-desktop.desktop
 /usr/share/icons/hicolor/512x512/apps/claude.png
+/usr/share/icons/hicolor/512x512/apps/claude-electron.png
 
 %changelog

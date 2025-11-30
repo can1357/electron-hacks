@@ -1,5 +1,5 @@
 Name:           notion
-Version:        1.4.4
+Version:        1.4.5
 Release:        1%{?dist}
 Summary:        Notion desktop app for Linux
 License:        MIT
@@ -22,6 +22,7 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/512x512/apps
 cp -r %{_sourcedir}/notion/linux-unpacked/* %{buildroot}/opt/notion/
 rm -f %{buildroot}/opt/notion/resources/app.asar
 cp %{_sourcedir}/notion/icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/notion.png
+ln -s notion.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/notion-electron.png
 
 cat > %{buildroot}/usr/bin/notion << 'EOF'
 #!/bin/bash
@@ -45,6 +46,7 @@ EOF
 /usr/bin/notion
 /usr/share/applications/notion.desktop
 /usr/share/icons/hicolor/512x512/apps/notion.png
+/usr/share/icons/hicolor/512x512/apps/notion-electron.png
 
 %changelog
 * Sat Nov 29 2025 Can <me@can.ac> - 1.0.0-1

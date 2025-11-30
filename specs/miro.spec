@@ -1,5 +1,5 @@
 Name:           miro
-Version:        1.4.4
+Version:        1.4.5
 Release:        1%{?dist}
 Summary:        Miro desktop app for Linux
 License:        MIT
@@ -22,6 +22,7 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/512x512/apps
 cp -r %{_sourcedir}/miro/linux-unpacked/* %{buildroot}/opt/miro/
 rm -f %{buildroot}/opt/miro/resources/app.asar
 cp %{_sourcedir}/miro/icon.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/miro.png
+ln -s miro.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/miro-electron.png
 
 cat > %{buildroot}/usr/bin/miro << 'EOF'
 #!/bin/bash
@@ -45,6 +46,7 @@ EOF
 /usr/bin/miro
 /usr/share/applications/miro.desktop
 /usr/share/icons/hicolor/512x512/apps/miro.png
+/usr/share/icons/hicolor/512x512/apps/miro-electron.png
 
 %changelog
 * Sat Nov 29 2025 Can <me@can.ac> - 1.0.0-1

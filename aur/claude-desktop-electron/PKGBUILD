@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=claude-desktop-electron
-pkgver=1.4.4
+pkgver=1.4.5
 pkgrel=1
 pkgdesc="Claude AI desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
@@ -18,6 +18,7 @@ package() {
     install -Dm644 claude-desktop/breeze.css "$pkgdir/usr/lib/$pkgname/breeze.css"
     install -Dm644 claude-desktop/icon.png "$pkgdir/usr/lib/$pkgname/icon.png"
     install -Dm644 claude-desktop/icon.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/claude.png"
+    ln -s claude.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/claude-electron.png"
     cp -r claude-desktop/resources "$pkgdir/usr/lib/$pkgname/"
 
     install -Dm755 /dev/stdin "$pkgdir/usr/bin/claude-desktop" <<EOF
