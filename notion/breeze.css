@@ -34,12 +34,12 @@
   --ca-palTraGra850: rgba(248, 249, 252, 0.87) !important;
   --ca-palTraGra900: rgba(248, 249, 252, 0.96) !important;
 
-  /* Primary backgrounds - matched to Miro base */
+  /* Primary backgrounds - secondary/tertiary darker than primary */
   --c-bacPri: #26292e !important;
-  --c-bacSec: #2c2f34 !important;
-  --c-bacTer: #393d44 !important;
-  --c-bacEle: #2c2f34 !important;
-  --c-bacAccPri: #393d44 !important;
+  --c-bacSec: #1e2124 !important;
+  --c-bacTer: #1a1c20 !important;
+  --c-bacEle: #22252a !important;
+  --c-bacAccPri: #2c2f34 !important;
   --ca-bacSecTra: rgba(248, 249, 252, 0.03) !important;
   --cd-bacEleTra: rgba(248, 249, 252, 0.03) !important;
   --ca-bacTerTra: rgba(248, 249, 252, 0.082) !important;
