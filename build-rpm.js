@@ -47,7 +47,7 @@ if (!fs.existsSync(unpackedSrc)) {
 fs.symlinkSync(unpackedSrc, unpackedDst);
 
 // Symlink app files needed by spec
-const appFiles = ['main.js', 'native-stub.js', 'auto-approve.js', 'breeze.css', 'icon.png', 'claude-quick'];
+const appFiles = ['main.js', 'native-stub.js', 'auto-approve.js', 'force-thinking.js', 'breeze.css', 'icon.png', 'claude-quick'];
 for (const file of appFiles) {
    const src = path.resolve(__dirname, `${app}/${file}`);
    if (fs.existsSync(src)) {

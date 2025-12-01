@@ -12,6 +12,7 @@ const flags = {
    noThinking: process.env.CLAUDE_NO_THINKING === '1',
    noDevtools: process.env.CLAUDE_NO_DEVTOOLS === '1',
    noUaSpoof: process.env.CLAUDE_NO_UA_SPOOF === '1',
+   noSentryBlock: process.env.CLAUDE_NO_SENTRY_BLOCK === '1',
 };
 
 console.log('[main] Feature flags:', flags);
@@ -24,6 +25,25 @@ if (!flags.noUaSpoof) {
       sess.setUserAgent(chromeUA);
    });
    console.log('[main] UA spoofing enabled');
+}
+
+// Block Sentry telemetry via webRequest API
+if (!flags.noSentryBlock) {
+   app.on('session-created', (sess) => {
+      sess.webRequest.onBeforeRequest({ urls: ['*://*.sentry.io/*', '*://*/sentry*'] }, (details, callback) => {
+         callback({ cancel: true });
+      });
+   });
+   console.log('[main] Sentry blocking enabled');
+}
+
+// Register preload script
+const preloadPath = path.join(__dirname, 'preload.js');
+if (fs.existsSync(preloadPath)) {
+   app.on('session-created', (sess) => {
+      sess.registerPreloadScript({ id: 'patches', type: 'frame', filePath: preloadPath });
+   });
+   console.log('[main] Preload script registered');
 }
 
 // Detect environment by checking where Claude app exists
@@ -67,29 +87,11 @@ if (process.platform === 'linux') {
 // Load supporting files relative to main.js location
 const themePath = path.join(baseDir, 'breeze.css');
 const iconPath = path.join(baseDir, 'icon.png');
-const yoloPath = path.join(baseDir, 'auto-approve.js');
-const thinkingPath = path.join(baseDir, 'force-thinking.js');
-
 // Theme CSS
 let themeCSS = '';
 if (!flags.noTheme && fs.existsSync(themePath)) {
    themeCSS = fs.readFileSync(themePath, 'utf8');
    console.log('[Theme] Loaded CSS:', themeCSS.length, 'bytes');
-}
-
-// YOLO mode: auto-approve all MCP tool requests
-const yoloFileDisabled = fs.existsSync(path.join(os.homedir(), '.config', 'Claude', 'no-yolo'));
-let yoloScript = '';
-if (!flags.noYolo && !yoloFileDisabled && fs.existsSync(yoloPath)) {
-   yoloScript = fs.readFileSync(yoloPath, 'utf8');
-   console.log('[YOLO] Mode enabled');
-}
-
-// Force extended thinking
-let thinkingScript = '';
-if (!flags.noThinking && fs.existsSync(thinkingPath)) {
-   thinkingScript = fs.readFileSync(thinkingPath, 'utf8');
-   console.log('[Thinking] Force-thinking enabled');
 }
 
 // CSS to hide custom titlebar in shell windows
@@ -121,16 +123,6 @@ app.on('web-contents-created', (event, webContents) => {
       // Theme CSS
       if (themeCSS) {
          webContents.insertCSS(themeCSS).catch(() => {});
-      }
-
-      // YOLO auto-approve
-      if (yoloScript) {
-         webContents.executeJavaScript(yoloScript).catch(() => {});
-      }
-
-      // Force extended thinking
-      if (thinkingScript) {
-         webContents.executeJavaScript(thinkingScript).catch(() => {});
       }
    });
 });
