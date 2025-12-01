@@ -15,9 +15,13 @@
   },
   "linux": {
     "artifactName": "${name}-${version}-${arch}.${ext}",
-    "target": ["AppImage", "deb"],
+    "target": ["AppImage"],
     "category": "Office",
     "icon": "miro/icon.png",
     "executableName": "miro"
+  },
+  "deb": {
+    "compression": "gz",
+    "priority": "optional"
   }
 }

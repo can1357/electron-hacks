@@ -15,9 +15,13 @@
   },
   "linux": {
     "artifactName": "${name}-${version}-${arch}.${ext}",
-    "target": ["AppImage", "deb"],
+    "target": ["AppImage"],
     "category": "Office",
     "icon": "notion/icon.png",
     "executableName": "notion"
+  },
+  "deb": {
+    "compression": "gz",
+    "priority": "optional"
   }
 }

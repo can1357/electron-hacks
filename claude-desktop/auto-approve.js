@@ -42,7 +42,7 @@
    setTimeout(() => {
       hydrated = true;
       new MutationObserver(tryAutoApprove).observe(document.body, { childList: true, subtree: true });
-      setInterval(tryAutoApprove, 200);
+      setInterval(tryAutoApprove, 500);
       console.log('[YOLO] Auto-approve active');
    }, HYDRATION_DELAY_MS);
 

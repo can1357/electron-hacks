@@ -29,9 +29,13 @@
   },
   "linux": {
     "artifactName": "${name}-${version}-${arch}.${ext}",
-    "target": ["AppImage", "deb"],
+    "target": ["AppImage"],
     "category": "Office",
     "icon": "claude-desktop/icon.png",
     "executableName": "claude-desktop"
+  },
+  "deb": {
+    "compression": "gz",
+    "priority": "optional"
   }
 }

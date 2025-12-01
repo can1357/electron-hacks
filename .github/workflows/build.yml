@@ -94,11 +94,8 @@ jobs:
           name: claude-source
           path: claude-desktop/resources
 
-      - name: Build ${{ matrix.app }} (AppImage + deb)
-        run: npm run build:${{ matrix.app }}
-
-      - name: Build ${{ matrix.app }} (rpm)
-        run: npm run build:${{ matrix.app }}:rpm
+      - name: Build ${{ matrix.app }} (all formats)
+        run: npm run build:${{ matrix.app }}:all
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
