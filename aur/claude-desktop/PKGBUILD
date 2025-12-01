@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=claude-desktop
-pkgver=1.6.1
+pkgver=1.6.2
 pkgrel=1
 pkgdesc="Claude AI desktop app for Linux (Electron wrapper)"
 arch=('x86_64')
