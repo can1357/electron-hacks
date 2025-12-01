@@ -9,6 +9,13 @@ if (process.platform === 'linux') {
 }
 nativeTheme.themeSource = 'dark';
 
+// Spoof User-Agent to standard Chrome
+const chromeUA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+app.userAgentFallback = chromeUA;
+app.on('session-created', (sess) => {
+   sess.setUserAgent(chromeUA);
+});
+
 const NOTION_URL = 'https://notion.so';
 
 const themePath = path.join(__dirname, 'breeze.css');
@@ -76,10 +83,6 @@ function createWindow() {
       },
       autoHideMenuBar: true,
    });
-
-   mainWindow.webContents.setUserAgent(
-      mainWindow.webContents.getUserAgent().replace(/Electron\/\S+\s/, '')
-   );
 
    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
       if (url.startsWith('https://notion.so') || url.startsWith('https://www.notion.so')) {

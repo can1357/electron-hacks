@@ -1,9 +1,30 @@
 // Unified entry point for Claude Desktop on Linux
 // Works with both system electron (AUR/dev) and bundled electron (RPM/AppImage)
-const { app, nativeImage } = require('electron');
+const { app, nativeImage, session } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+
+// Feature flags (set env var to '1' to disable)
+const flags = {
+   noYolo: process.env.CLAUDE_NO_YOLO === '1',
+   noTheme: process.env.CLAUDE_NO_THEME === '1',
+   noThinking: process.env.CLAUDE_NO_THINKING === '1',
+   noDevtools: process.env.CLAUDE_NO_DEVTOOLS === '1',
+   noUaSpoof: process.env.CLAUDE_NO_UA_SPOOF === '1',
+};
+
+console.log('[main] Feature flags:', flags);
+
+// Spoof User-Agent to standard Chrome (unless disabled)
+if (!flags.noUaSpoof) {
+   const chromeUA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+   app.userAgentFallback = chromeUA;
+   app.on('session-created', (sess) => {
+      sess.setUserAgent(chromeUA);
+   });
+   console.log('[main] UA spoofing enabled');
+}
 
 // Detect environment by checking where Claude app exists
 const baseDir = __dirname;
@@ -51,23 +72,22 @@ const thinkingPath = path.join(baseDir, 'force-thinking.js');
 
 // Theme CSS
 let themeCSS = '';
-if (fs.existsSync(themePath)) {
+if (!flags.noTheme && fs.existsSync(themePath)) {
    themeCSS = fs.readFileSync(themePath, 'utf8');
    console.log('[Theme] Loaded CSS:', themeCSS.length, 'bytes');
 }
 
-// YOLO mode: auto-approve all MCP tool requests (enabled by default)
-const yoloDisabled = process.env.CLAUDE_NO_YOLO === '1' ||
-   fs.existsSync(path.join(os.homedir(), '.config', 'Claude', 'no-yolo'));
+// YOLO mode: auto-approve all MCP tool requests
+const yoloFileDisabled = fs.existsSync(path.join(os.homedir(), '.config', 'Claude', 'no-yolo'));
 let yoloScript = '';
-if (!yoloDisabled && fs.existsSync(yoloPath)) {
+if (!flags.noYolo && !yoloFileDisabled && fs.existsSync(yoloPath)) {
    yoloScript = fs.readFileSync(yoloPath, 'utf8');
    console.log('[YOLO] Mode enabled');
 }
 
-// Force extended thinking: always keep it enabled
+// Force extended thinking
 let thinkingScript = '';
-if (fs.existsSync(thinkingPath)) {
+if (!flags.noThinking && fs.existsSync(thinkingPath)) {
    thinkingScript = fs.readFileSync(thinkingPath, 'utf8');
    console.log('[Thinking] Force-thinking enabled');
 }
@@ -76,13 +96,15 @@ if (fs.existsSync(thinkingPath)) {
 const hideTitlebarCSS = `.nc-drag { display: none !important; height: 0 !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important; }`;
 
 // Register F12 for DevTools (detached)
-app.on('web-contents-created', (event, webContents) => {
-   webContents.on('before-input-event', (event, input) => {
-      if (input.key === 'F12' && input.type === 'keyDown') {
-         webContents.openDevTools({ mode: 'detach' });
-      }
+if (!flags.noDevtools) {
+   app.on('web-contents-created', (event, webContents) => {
+      webContents.on('before-input-event', (event, input) => {
+         if (input.key === 'F12' && input.type === 'keyDown') {
+            webContents.openDevTools({ mode: 'detach' });
+         }
+      });
    });
-});
+}
 
 // Inject CSS and scripts into webContents
 app.on('web-contents-created', (event, webContents) => {

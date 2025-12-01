@@ -1,6 +1,8 @@
 (function() {
    const COOLDOWN_MS = 300;
+   const HYDRATION_DELAY_MS = 2000;
    let lastClick = 0;
+   let hydrated = false;
 
    const ALLOW_PATTERNS = [
       'always allow',
@@ -9,7 +11,6 @@
    ];
 
    function findAllowButton() {
-      // Try multiple dialog selectors
       const dialogs = document.querySelectorAll('[role="dialog"], [data-state="open"], .modal, [class*="dialog"], [class*="Dialog"]');
       for (const dialog of dialogs) {
          const buttons = Array.from(dialog.querySelectorAll('button'));
@@ -18,7 +19,6 @@
             if (btn) return btn;
          }
       }
-      // Fallback: search all buttons on page
       const allButtons = Array.from(document.querySelectorAll('button'));
       for (const pattern of ALLOW_PATTERNS) {
          const btn = allButtons.find(b => b.textContent?.toLowerCase().includes(pattern));
@@ -28,6 +28,7 @@
    }
 
    function tryAutoApprove() {
+      if (!hydrated) return;
       if (Date.now() - lastClick < COOLDOWN_MS) return;
       const btn = findAllowButton();
       if (btn) {
@@ -37,11 +38,13 @@
       }
    }
 
-   // MutationObserver for immediate response
-   new MutationObserver(tryAutoApprove).observe(document.body, { childList: true, subtree: true });
+   // Wait for React hydration to complete before observing
+   setTimeout(() => {
+      hydrated = true;
+      new MutationObserver(tryAutoApprove).observe(document.body, { childList: true, subtree: true });
+      setInterval(tryAutoApprove, 200);
+      console.log('[YOLO] Auto-approve active');
+   }, HYDRATION_DELAY_MS);
 
-   // Interval fallback
-   setInterval(tryAutoApprove, 200);
-
-   console.log('[YOLO] Auto-approve active');
+   console.log('[YOLO] Waiting for hydration...');
 })();
