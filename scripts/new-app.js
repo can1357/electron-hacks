@@ -37,7 +37,7 @@ const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
 
 let mainWindow;
 let darkModeEnabled = true;
-let darkCss;
+let celestialCss;
 
 function loadConfig() {
    try {
@@ -52,15 +52,15 @@ function saveConfig() {
    fs.writeFileSync(CONFIG_PATH, JSON.stringify({ darkMode: darkModeEnabled }));
 }
 
-function loadDarkCss() {
-   const cssPath = path.join(__dirname, 'dark.css');
-   darkCss = fs.readFileSync(cssPath, 'utf8');
+function loadCelestialCss() {
+   const cssPath = path.join(__dirname, 'celestial.css');
+   celestialCss = fs.readFileSync(cssPath, 'utf8');
 }
 
 async function injectDarkMode() {
-   if (!mainWindow || !darkCss) return;
+   if (!mainWindow || !celestialCss) return;
    if (darkModeEnabled) {
-      await mainWindow.webContents.insertCSS(darkCss, { cssOrigin: 'user' });
+      await mainWindow.webContents.insertCSS(celestialCss, { cssOrigin: 'user' });
    }
 }
 
@@ -135,7 +135,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
    loadConfig();
-   loadDarkCss();
+   loadCelestialCss();
    Menu.setApplicationMenu(createMenu());
    createWindow();
    app.on('activate', () => {
@@ -228,13 +228,13 @@ app.on('window-all-closed', () => { app.quit(); });
 fs.writeFileSync(path.join(appDir, 'main.js'), mainJs);
 
 if (enableDark) {
-   fs.writeFileSync(path.join(appDir, 'dark.css'), `/* Dark mode CSS for ${Name} - customize as needed */
+   fs.writeFileSync(path.join(appDir, 'celestial.css'), `/* Celestial theme for ${Name} - customize as needed */
 :root {
    color-scheme: dark;
 }
 
 body {
-   background-color: #1a1a1a !important;
+   background-color: #0b0c0f !important;
 }
 `);
 }
@@ -330,7 +330,7 @@ fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
 
 console.log(`
 Created ${name}/ app:
-  ${name}/main.js${enableDark ? `\n  ${name}/dark.css` : ''}
+  ${name}/main.js${enableDark ? `\n  ${name}/celestial.css` : ''}
   electron-builder.${name}.json
   specs/${name}.spec
 

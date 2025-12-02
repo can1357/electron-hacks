@@ -32,7 +32,7 @@ cp %{_sourcedir}/claude-desktop/main.js %{buildroot}/opt/claude-desktop/resource
 cp %{_sourcedir}/claude-desktop/native-stub.js %{buildroot}/opt/claude-desktop/resources/app/
 cp %{_sourcedir}/claude-desktop/auto-approve.js %{buildroot}/opt/claude-desktop/resources/app/
 cp %{_sourcedir}/claude-desktop/force-thinking.js %{buildroot}/opt/claude-desktop/resources/app/
-cp %{_sourcedir}/claude-desktop/breeze.css %{buildroot}/opt/claude-desktop/resources/app/
+cp %{_sourcedir}/claude-desktop/celestial.css %{buildroot}/opt/claude-desktop/resources/app/
 cp %{_sourcedir}/claude-desktop/icon.png %{buildroot}/opt/claude-desktop/resources/app/
 
 # Copy Claude app (.vite, node_modules) from electron-builder output

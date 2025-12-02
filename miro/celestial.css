@@ -1,0 +1,114 @@
+:root {
+  /* Invert the gray scale for celestial dark mode - base matches celestial crust */
+  --colors-gray-50: #0E0F13 !important;
+  --colors-gray-100: #1b1c25 !important;
+  --colors-gray-150: #22252e !important;
+  --colors-gray-200: #2E303E !important;
+  --colors-gray-250: #3a3d4d !important;
+  --colors-gray-300: #474a5c !important;
+  --colors-gray-350: #54586b !important;
+  --colors-gray-400: #61657a !important;
+  --colors-gray-450: #6C6F93 !important;
+  --colors-gray-475: #7d809d !important;
+  --colors-gray-500: #9295aa !important;
+  --colors-gray-550: #a7aab7 !important;
+  --colors-gray-600: #BBBBBB !important;
+  --colors-gray-650: #c8c8c8 !important;
+  --colors-gray-700: #D5D8DA !important;
+  --colors-gray-750: #dfe1e3 !important;
+  --colors-gray-800: #e8e9eb !important;
+  --colors-gray-850: #f1f2f3 !important;
+  --colors-gray-900: #f8f9fa !important;
+  --colors-gray-950: #FFFFFF !important;
+
+  /* Invert coal scale with celestial tones */
+  --colors-coal-50: #1b1c25 !important;
+  --colors-coal-100: #22252e !important;
+  --colors-coal-150: #2E303E !important;
+  --colors-coal-200: #3a3d4d !important;
+  --colors-coal-250: #474a5c !important;
+  --colors-coal-300: #6C6F93 !important;
+  --colors-coal-350: #7d809d !important;
+  --colors-coal-400: #9295aa !important;
+  --colors-coal-450: #a7aab7 !important;
+  --colors-coal-500: #BBBBBB !important;
+  --colors-coal-550: #c8c8c8 !important;
+  --colors-coal-600: #D5D8DA !important;
+  --colors-coal-650: #dfe1e3 !important;
+  --colors-coal-700: #e8e9eb !important;
+  --colors-coal-750: #f1f2f3 !important;
+  --colors-coal-800: #f8f9fa !important;
+  --colors-coal-850: #fcfcfc !important;
+  --colors-coal-900: #FFFFFF !important;
+
+  /* Swap black and white */
+  --colors-black: #FFFFFF !important;
+  --colors-white: #0E0F13 !important;
+
+  /* Alpha colors - swap black/white alphas with celestial base */
+  --colors-alpha-black-50: #FFFFFF0D !important;
+  --colors-alpha-black-100: #FFFFFF1A !important;
+  --colors-alpha-black-200: #FFFFFF33 !important;
+  --colors-alpha-black-300: #FFFFFF4D !important;
+  --colors-alpha-black-400: #FFFFFF66 !important;
+  --colors-alpha-black-500: #FFFFFF80 !important;
+  --colors-alpha-black-600: #FFFFFF99 !important;
+  --colors-alpha-black-700: #FFFFFFB3 !important;
+  --colors-alpha-black-800: #FFFFFFCC !important;
+  --colors-alpha-black-900: #FFFFFFE6 !important;
+
+  --colors-alpha-white-50: #0E0F130D !important;
+  --colors-alpha-white-100: #0E0F131A !important;
+  --colors-alpha-white-200: #0E0F1333 !important;
+  --colors-alpha-white-300: #0E0F134D !important;
+  --colors-alpha-white-400: #0E0F1366 !important;
+  --colors-alpha-white-500: #0E0F1380 !important;
+  --colors-alpha-white-600: #0E0F1399 !important;
+  --colors-alpha-white-700: #0E0F13B3 !important;
+  --colors-alpha-white-800: #0E0F13CC !important;
+  --colors-alpha-white-900: #0E0F13E6 !important;
+
+  /* Background tokens */
+  --colors-background-primary-subtle: #1b1c25 !important;
+  --colors-border-primary-subtle: #22252e !important;
+  --colors-text-neutrals-pressed: #f1f2f3 !important;
+
+  /* Celestial accent colors - using teal/cyan as primary accent */
+  --colors-accent-primary: #25B0BC !important;
+  --colors-accent-primary-hover: #21BFC2 !important;
+  --colors-accent-secondary: #B877DB !important;
+  --colors-success: #27D797 !important;
+  --colors-error: #F43E5C !important;
+  --colors-warning: #FAB795 !important;
+}
+
+/* Override hardcoded backgrounds with celestial base/crust */
+html, body {
+    background: #0b0c0f !important;
+    background-color: #0b0c0f !important;
+}
+.rtbLoader {
+    background: #0b0c0f !important;
+}
+.angular-root {
+    background: #0b0c0f !important;
+}
+
+/* Scrollbars with celestial colors */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #1b1c25;
+}
+::-webkit-scrollbar-thumb {
+    background: #6C6F93;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #25B0BC;
+}
+::-webkit-scrollbar-corner {
+    background: #1b1c25;
+}

@@ -1,0 +1,229 @@
+/* Celestial theme for Claude */
+/* Deep backgrounds with teal/cyan accent (#25B0BC) */
+
+/* Quick window and local windows - Celestial Light */
+:root:not(.darkTheme) {
+  --claude-accent-clay: #25B0BC !important;
+  --accent-brand: 188 78% 45% !important;
+  --accent-main-000: 188 78% 45% !important;
+  --accent-main-100: 188 78% 45% !important;
+  --accent-main-200: 188 78% 45% !important;
+  --accent-main-900: 188 78% 45% !important;
+  --accent-pro-000: 188 78% 45% !important;
+  --accent-pro-100: 188 78% 45% !important;
+  --accent-pro-200: 188 78% 45% !important;
+  --accent-pro-900: 188 78% 45% !important;
+  --accent-secondary-000: 188 78% 45% !important;
+  --accent-secondary-100: 188 78% 45% !important;
+  --accent-secondary-200: 188 78% 45% !important;
+  --accent-secondary-900: 188 78% 45% !important;
+  --claude-foreground-color: #2E303E !important;
+  --claude-background-color: #F5F5F7 !important;
+  --claude-secondary-color: #6C6F93 !important;
+  --claude-border: rgba(37, 176, 188, 0.25) !important;
+  --claude-border-300: rgba(37, 176, 188, 0.25) !important;
+  --claude-border-300-more: rgba(37, 176, 188, 0.65) !important;
+  --claude-text-100: #2E303E !important;
+  --claude-text-200: #1b1c25 !important;
+  --claude-text-400: #6C6F93 !important;
+}
+
+/* Quick window and local windows - Celestial Dark */
+.darkTheme {
+  --claude-accent-clay: #25B0BC !important;
+  --accent-brand: 188 78% 45% !important;
+  --accent-main-000: 188 78% 45% !important;
+  --accent-main-100: 188 78% 45% !important;
+  --accent-main-200: 188 78% 45% !important;
+  --accent-main-900: 188 78% 45% !important;
+  --accent-pro-000: 188 78% 45% !important;
+  --accent-pro-100: 188 78% 45% !important;
+  --accent-pro-200: 188 78% 45% !important;
+  --accent-pro-900: 188 78% 45% !important;
+  --accent-secondary-000: 188 78% 45% !important;
+  --accent-secondary-100: 188 78% 45% !important;
+  --accent-secondary-200: 188 78% 45% !important;
+  --accent-secondary-900: 188 78% 45% !important;
+  --bg-000: 221 17% 6% !important;
+  --bg-100: 221 15% 9% !important;
+  --bg-200: 221 14% 11% !important;
+  --bg-300: 220 13% 15% !important;
+  --bg-400: 220 12% 19% !important;
+  --bg-500: 220 10% 24% !important;
+  --border-100: 220 11% 14% !important;
+  --border-200: 220 11% 14% !important;
+  --border-300: 220 10% 18% !important;
+  --border-400: 225 7% 43% !important;
+  --danger-000: 349 83% 61% !important;
+  --danger-100: 349 82% 58% !important;
+  --danger-200: 349 82% 58% !important;
+  --danger-900: 349 75% 66% !important;
+  --oncolor-100: 0 0% 100% !important;
+  --oncolor-200: 221 13% 97% !important;
+  --oncolor-300: 221 13% 97% !important;
+  --success-000: 160 65% 50% !important;
+  --success-100: 160 67% 49% !important;
+  --success-200: 160 67% 49% !important;
+  --success-900: 160 60% 55% !important;
+  --text-000: 200 7% 85% !important;
+  --text-100: 200 7% 85% !important;
+  --text-200: 0 0% 73% !important;
+  --text-300: 0 0% 73% !important;
+  --text-400: 225 7% 43% !important;
+  --text-500: 225 7% 43% !important;
+  --claude-foreground-color: #D5D8DA !important;
+  --claude-background-color: #0E0F13 !important;
+  --claude-secondary-color: #6C6F93 !important;
+  --claude-border: rgba(37, 176, 188, 0.25) !important;
+  --claude-border-300: rgba(37, 176, 188, 0.25) !important;
+  --claude-border-300-more: rgba(37, 176, 188, 0.65) !important;
+  --claude-text-100: #D5D8DA !important;
+  --claude-text-200: #BBBBBB !important;
+  --claude-text-400: #6C6F93 !important;
+  --claude-text-500: #5C5F83 !important;
+  --claude-description-text: #BBBBBB !important;
+}
+
+.darkTheme ::selection {
+  background-color: rgba(37, 176, 188, 0.3) !important;
+}
+
+/* Override clay accent on all elements */
+* {
+  --claude-accent-clay: #25B0BC !important;
+}
+
+:root:not(.darkTheme) * {
+  --claude-accent-clay: #25B0BC !important;
+}
+
+/* Dark theme - Celestial Dark */
+[data-theme=claude][data-mode=dark] {
+  --accent-brand: 188 78% 45% !important;
+  --accent-main-000: 188 78% 45% !important;
+  --accent-main-100: 188 78% 45% !important;
+  --accent-main-200: 188 78% 45% !important;
+  --accent-main-900: 188 78% 45% !important;
+  --accent-pro-000: 188 78% 45% !important;
+  --accent-pro-100: 188 78% 45% !important;
+  --accent-pro-200: 188 78% 45% !important;
+  --accent-pro-900: 188 78% 45% !important;
+  --accent-secondary-000: 188 78% 45% !important;
+  --accent-secondary-100: 188 78% 45% !important;
+  --accent-secondary-200: 188 78% 45% !important;
+  --accent-secondary-900: 188 78% 45% !important;
+  --bg-000: 221 17% 6% !important;
+  --bg-100: 221 15% 9% !important;
+  --bg-200: 221 14% 11% !important;
+  --bg-300: 220 13% 15% !important;
+  --bg-400: 220 12% 19% !important;
+  --bg-500: 220 10% 24% !important;
+  --border-000: 221 15% 9% !important;
+  --border-100: 220 11% 14% !important;
+  --border-200: 220 11% 14% !important;
+  --border-300: 220 10% 18% !important;
+  --border-400: 225 7% 43% !important;
+  --border-500: 225 6% 50% !important;
+  --danger-000: 349 83% 61% !important;
+  --danger-100: 349 82% 58% !important;
+  --danger-200: 349 82% 58% !important;
+  --danger-900: 349 75% 66% !important;
+  --oncolor-000: 221 17% 6% !important;
+  --oncolor-100: 221 15% 9% !important;
+  --oncolor-200: 221 15% 9% !important;
+  --oncolor-300: 221 14% 11% !important;
+  --text-000: 200 7% 85% !important;
+  --text-100: 200 7% 85% !important;
+  --text-200: 200 7% 85% !important;
+  --text-300: 0 0% 73% !important;
+  --text-400: 0 0% 73% !important;
+  --text-500: 225 7% 43% !important;
+}
+
+/* Light theme - Celestial Light */
+[data-theme=claude][data-mode=light] {
+  --accent-brand: 188 78% 45% !important;
+  --accent-main-000: 188 78% 45% !important;
+  --accent-main-100: 188 78% 45% !important;
+  --accent-main-200: 188 78% 45% !important;
+  --accent-main-900: 188 78% 45% !important;
+  --accent-pro-000: 188 78% 45% !important;
+  --accent-pro-100: 188 78% 45% !important;
+  --accent-pro-200: 188 78% 45% !important;
+  --accent-pro-900: 188 78% 45% !important;
+  --accent-secondary-000: 188 78% 45% !important;
+  --accent-secondary-100: 188 78% 45% !important;
+  --accent-secondary-200: 188 78% 45% !important;
+  --accent-secondary-900: 188 78% 45% !important;
+  --bg-000: 240 11% 92% !important;
+  --bg-100: 240 11% 96% !important;
+  --bg-200: 240 11% 96% !important;
+  --bg-300: 240 9% 88% !important;
+  --bg-400: 240 8% 82% !important;
+  --bg-500: 240 6% 76% !important;
+  --border-000: 240 11% 96% !important;
+  --border-100: 240 9% 88% !important;
+  --border-200: 240 9% 88% !important;
+  --border-300: 240 6% 68% !important;
+  --border-400: 240 5% 58% !important;
+  --border-500: 240 4% 50% !important;
+  --danger-000: 349 85% 48% !important;
+  --danger-100: 349 83% 52% !important;
+  --danger-200: 349 83% 52% !important;
+  --danger-900: 349 80% 55% !important;
+  --oncolor-000: 240 11% 94% !important;
+  --oncolor-100: 240 11% 96% !important;
+  --oncolor-200: 240 11% 96% !important;
+  --oncolor-300: 240 11% 98% !important;
+  --text-000: 220 13% 22% !important;
+  --text-100: 220 13% 18% !important;
+  --text-200: 220 13% 18% !important;
+  --text-300: 225 7% 43% !important;
+  --text-400: 220 12% 30% !important;
+  --text-500: 225 7% 43% !important;
+}
+
+[data-theme=claude][data-mode=dark] ::selection {
+  background-color: rgba(37, 176, 188, 0.3) !important;
+}
+
+[data-theme=claude][data-mode=light] ::selection {
+  background-color: rgba(37, 176, 188, 0.3) !important;
+}
+
+[data-theme=claude][data-mode=dark] input::placeholder,
+[data-theme=claude][data-mode=dark] textarea::placeholder {
+  color: #6C6F93 !important;
+}
+
+[data-theme=claude][data-mode=light] input::placeholder,
+[data-theme=claude][data-mode=light] textarea::placeholder {
+  color: #6C6F93 !important;
+}
+
+/* Code blocks - dark */
+[data-theme=claude][data-mode=dark] .code-block__code {
+  background: #0b0c0f !important;
+}
+
+[data-theme=claude][data-mode=dark] .code-block__code code span {
+  color: #D5D8DA !important;
+}
+
+/* Code blocks - light */
+[data-theme=claude][data-mode=light] .code-block__code {
+  background: #E8E8EA !important;
+}
+
+[data-theme=claude][data-mode=light] .code-block__code code span {
+  color: #2E303E !important;
+}
+
+/* Inline code - celestial coral */
+[data-theme=claude][data-mode=dark] code.text-danger-000 {
+  color: #d9774f !important;
+}
+
+[data-theme=claude][data-mode=light] code.text-danger-000 {
+  color: #d9774f !important;
+}

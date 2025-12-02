@@ -92,7 +92,7 @@ if (process.platform === 'linux') {
 }
 
 // Load supporting files relative to main.js location
-const themePath = path.join(baseDir, 'breeze.css');
+const themePath = path.join(baseDir, 'celestial.css');
 const iconPath = path.join(baseDir, 'icon.png');
 // Theme CSS
 let themeCSS = '';

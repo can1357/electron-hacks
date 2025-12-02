@@ -4,13 +4,13 @@ Lightweight Electron wrappers for web applications on Linux.
 
 ## Supported Apps
 
-| App | Type | Dark Mode | Notes |
-|-----|------|-----------|-------|
-| **Miro** | Web wrapper | Breeze Dark | Custom dark mode with persistence |
-| **Notion** | Web wrapper | Breeze Dark | Explicit theming via injected CSS |
-| **Claude Desktop** | Native port | Breeze Dark | Full desktop app with KDE Breeze theming |
+| App | Type | Theme | Notes |
+|-----|------|-------|-------|
+| **Miro** | Web wrapper | Celestial | Custom dark mode with persistence |
+| **Notion** | Web wrapper | Celestial | Explicit theming via injected CSS |
+| **Claude Desktop** | Native port | Celestial | Full desktop app with custom theming |
 
-All apps are explicitly themed with [Breeze Dark](https://develop.kde.org/hig/style/color/) for a consistent KDE look.
+All apps use the Celestial theme - a deep dark aesthetic with teal (#25B0BC) accents.
 
 ## Features
 

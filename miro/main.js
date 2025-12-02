@@ -21,7 +21,7 @@ const CONFIG_PATH = path.join(app.getPath('userData'), 'config.json');
 
 let mainWindow;
 let darkModeEnabled = true;
-let darkCss;
+let celestialCss;
 
 function loadConfig() {
    try {
@@ -37,15 +37,15 @@ function saveConfig() {
 }
 
 function loadDarkCss() {
-   const cssPath = path.join(__dirname, 'dark.css');
-   darkCss = fs.readFileSync(cssPath, 'utf8');
+   const cssPath = path.join(__dirname, 'celestial.css');
+   celestialCss = fs.readFileSync(cssPath, 'utf8');
 }
 
 async function injectDarkMode() {
-   if (!mainWindow || !darkCss) return;
+   if (!mainWindow || !celestialCss) return;
 
    if (darkModeEnabled) {
-      await mainWindow.webContents.insertCSS(darkCss, { cssOrigin: 'user' });
+      await mainWindow.webContents.insertCSS(celestialCss, { cssOrigin: 'user' });
    }
 }
 
@@ -110,7 +110,7 @@ function createWindow() {
    mainWindow = new BrowserWindow({
       width: 1400,
       height: 900,
-      backgroundColor: '#26292e',
+      backgroundColor: '#0b0c0f',
       icon: nativeImage.createFromPath(path.join(__dirname, 'icon.png')),
       webPreferences: {
          nodeIntegration: false,

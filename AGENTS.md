@@ -44,7 +44,7 @@ Creates: `<name>/main.js`, `electron-builder.<name>.json`, `specs/<name>.spec`, 
 ## Directory Structure
 
 - `<app>/main.js` - Electron entry point
-- `<app>/breeze.css` or `<app>/dark.css` - Theme CSS injected at runtime
+- `<app>/celestial.css` - Celestial theme CSS injected at runtime
 - `electron-builder.<app>.json` - Build configuration
 - `specs/<app>.spec` - RPM spec file
 - `aur/<app>/PKGBUILD` - Arch Linux package
@@ -62,12 +62,12 @@ Creates: `<name>/main.js`, `electron-builder.<name>.json`, `specs/<name>.spec`, 
 - User-agent spoofed to remove `Electron/` string (prevents web app detection)
 - External links open in system browser via `setWindowOpenHandler`
 - Security defaults: `contextIsolation: true`, `nodeIntegration: false`
-- Breeze Dark theming via CSS variable overrides
+- Celestial theming via CSS variable overrides (deep dark with #25B0BC teal accents)
 - Config persistence in `app.getPath('userData')/config.json`
 
 # Commit Style
 
-Use conventional commits: `feat:`, `fix:`, `refactor:`. Example: `feat(notion): added Breeze Dark theme`
+Use conventional commits: `feat:`, `fix:`, `refactor:`. Example: `feat(notion): added Celestial theme`
 
 # Version Management
 

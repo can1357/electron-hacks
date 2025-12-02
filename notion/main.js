@@ -18,11 +18,11 @@ app.on('session-created', (sess) => {
 
 const NOTION_URL = 'https://notion.so';
 
-const themePath = path.join(__dirname, 'breeze.css');
+const themePath = path.join(__dirname, 'celestial.css');
 let themeCSS = '';
 if (fs.existsSync(themePath)) {
    themeCSS = fs.readFileSync(themePath, 'utf8');
-   console.log('[Theme] Loaded Breeze CSS:', themeCSS.length, 'bytes');
+   console.log('[Theme] Loaded Celestial CSS:', themeCSS.length, 'bytes');
 }
 
 let mainWindow;

@@ -7,7 +7,7 @@
   },
   "files": [
     "claude-desktop/main.js",
-    "claude-desktop/breeze.css",
+    "claude-desktop/celestial.css",
     "claude-desktop/native-stub.js",
     "claude-desktop/auto-approve.js",
     "claude-desktop/force-thinking.js",
