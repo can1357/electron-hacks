@@ -1,6 +1,6 @@
 # Maintainer: Can Bölük <me@can.ac>
 pkgname=miro
-pkgver=1.6.3
+pkgver=1.6.4
 pkgrel=1
 pkgdesc="Miro desktop app for Linux (Electron wrapper with dark mode)"
 arch=('x86_64')
