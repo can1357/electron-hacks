@@ -27,14 +27,21 @@ if (!flags.noUaSpoof) {
    console.log('[main] UA spoofing enabled');
 }
 
-// Block Sentry telemetry via webRequest API
+// Block telemetry via webRequest API (Sentry + Anthropic analytics)
 if (!flags.noSentryBlock) {
-   app.on('session-created', (sess) => {
-      sess.webRequest.onBeforeRequest({ urls: ['*://*.sentry.io/*', '*://*/sentry*'] }, (details, callback) => {
-         callback({ cancel: true });
+   const telemetryUrls = [
+      '*://*.sentry.io/*',
+      '*://claude.ai/sentry*',
+      '*://a-api.anthropic.com/*',
+   ];
+   const blockTelemetry = (sess) => {
+      sess.webRequest.onBeforeRequest({ urls: telemetryUrls }, (details, callback) => {
+         callback({ redirectURL: 'data:application/json,{}' });
       });
-   });
-   console.log('[main] Sentry blocking enabled');
+   };
+   app.on('session-created', blockTelemetry);
+   app.whenReady().then(() => blockTelemetry(session.defaultSession));
+   console.log('[main] Telemetry blocking enabled');
 }
 
 // Register preload script

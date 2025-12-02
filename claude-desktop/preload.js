@@ -1,4 +1,19 @@
 // Preload script - runs before page loads
+const _log = console.log.bind(console);
+const _fetch = window.fetch.bind(window);
+
+// Block telemetry at fetch level
+const BLOCKED_HOSTS = ['a-api.anthropic.com', 'sentry.io'];
+window.fetch = function(url, opts) {
+   try {
+      const u = new URL(url, location.href);
+      if (BLOCKED_HOSTS.some(h => u.hostname.endsWith(h)) || u.pathname.startsWith('/sentry')) {
+         return Promise.resolve(new Response('{}', { status: 200, headers: { 'content-type': 'application/json' } }));
+      }
+   } catch {}
+   return _fetch(url, opts);
+};
+
 window.addEventListener('DOMContentLoaded', () => {
    if (!location.href.includes('claude.ai')) return;
 
@@ -35,7 +50,7 @@ window.addEventListener('DOMContentLoaded', () => {
          if (btn) {
             lastClick = Date.now();
             btn.click();
-            console.log('[YOLO] Auto-approved:', btn.textContent?.trim());
+            _log('[YOLO] Auto-approved:', btn.textContent?.trim());
          }
       }
 
@@ -43,40 +58,25 @@ window.addEventListener('DOMContentLoaded', () => {
          hydrated = true;
          new MutationObserver(tryAutoApprove).observe(document.body, { childList: true, subtree: true });
          setInterval(tryAutoApprove, 500);
-         console.log('[YOLO] Auto-approve active');
+         _log('[YOLO] Auto-approve active');
       }, HYDRATION_DELAY_MS);
    })();
 
-   // Force extended thinking
+   // Force extended thinking (only when user is typing)
    (function() {
-      let ready = false;
-
-      function isButtonReady() {
-         const btn = document.querySelector('button[aria-label="Extended thinking"]');
-         return btn && btn.offsetParent !== null && !btn.disabled; // visible and enabled
+      function canSend() {
+         const sendBtn = document.querySelector('button[aria-label="Send message"]');
+         return sendBtn && !sendBtn.disabled;
       }
 
-      function tryForceThinking() {
+      function tick() {
+         if (!canSend()) return;
          const btn = document.querySelector('button[aria-label="Extended thinking"]');
-         if (btn && btn.getAttribute('aria-pressed') === 'false') {
+         if (btn && btn.offsetParent !== null && !btn.disabled && btn.getAttribute('aria-pressed') === 'false') {
             btn.click();
-            console.log('[Thinking] Force-enabled extended thinking');
+            _log('[Thinking] Force-enabled extended thinking');
          }
       }
-
-      function waitForReady() {
-         if (isButtonReady()) {
-            if (!ready) {
-               ready = true;
-               console.log('[Thinking] Button detected, activating');
-               setTimeout(tryForceThinking, 100); // small delay after button appears
-            }
-            tryForceThinking();
-         } else {
-            ready = false;
-         }
-      }
-
-      setInterval(waitForReady, 500);
+      setInterval(tick, 500);
    })();
 });
