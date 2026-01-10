@@ -6,37 +6,25 @@ on:
       - 'v*'
   workflow_dispatch:
 
-env:
-  CLAUDE_VERSION: "1.0.1307"
-  CLAUDE_BUILD_ID: "1ed8835ce5539ba2a894ab752752be672a17c0d8"
-
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    outputs:
-      claude-cache-key: ${{ steps.claude-key.outputs.key }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Generate Claude cache key
-        id: claude-key
-        run: echo "key=claude-desktop-${{ env.CLAUDE_VERSION }}-${{ env.CLAUDE_BUILD_ID }}-v3" >> $GITHUB_OUTPUT
+        run: bun install --frozen-lockfile
 
       - name: Cache Claude Desktop source
         id: claude-cache
         uses: actions/cache@v4
         with:
           path: claude-desktop/resources
-          key: ${{ steps.claude-key.outputs.key }}
+          key: claude-desktop-${{ hashFiles('claude-desktop/resources/app/package.json') }}
+          restore-keys: claude-desktop-
 
       - name: Install system dependencies
         if: steps.claude-cache.outputs.cache-hit != 'true'
@@ -45,8 +33,10 @@ jobs:
       - name: Download and extract Claude Desktop
         if: steps.claude-cache.outputs.cache-hit != 'true'
         run: |
-          curl -L -o claude-installer.exe "https://downloads.claude.ai/releases/win32/x64/${{ env.CLAUDE_VERSION }}/Claude-${{ env.CLAUDE_BUILD_ID }}.exe"
-          npm run update-claude -- claude-installer.exe
+          curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            -o claude-installer.exe \
+            "https://claude.ai/api/desktop/win32/x64/exe/latest/redirect"
+          bun run update-claude -- claude-installer.exe
           rm claude-installer.exe
 
       - name: Upload Claude source
@@ -67,22 +57,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Cache electron-builder
         uses: actions/cache@v4
         with:
           path: ~/.cache/electron-builder
-          key: electron-builder-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            electron-builder-${{ runner.os }}-
+          key: electron-builder-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: electron-builder-${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install -y rpm p7zip-full imagemagick
@@ -95,7 +81,7 @@ jobs:
           path: claude-desktop/resources
 
       - name: Build ${{ matrix.app }} (all formats)
-        run: npm run build:${{ matrix.app }}:all
+        run: bun run build:${{ matrix.app }}:all
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
